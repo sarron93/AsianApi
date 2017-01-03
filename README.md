@@ -1,4 +1,5 @@
 Added virtual host
+
 <VirtualHost *:80>
     ServerName domain.tld
     ServerAlias www.domain.tld
