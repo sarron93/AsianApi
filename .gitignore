@@ -12,6 +12,7 @@
 
 # Managed by Composer
 /app/bootstrap.php.cache
+/app/config/config.yml
 /var/bootstrap.php.cache
 /bin/*
 !bin/console
