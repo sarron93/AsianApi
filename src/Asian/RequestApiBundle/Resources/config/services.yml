@@ -1,0 +1,4 @@
+services:
+#    asian_request_api.example:
+#        class: Asian\RequestApiBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

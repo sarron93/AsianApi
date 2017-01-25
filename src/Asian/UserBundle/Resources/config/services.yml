@@ -1,0 +1,4 @@
+services:
+#    asian_user.example:
+#        class: Asian\UserBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

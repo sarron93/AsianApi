@@ -6,7 +6,7 @@
  * Time: 11:41
  */
 
-namespace AppBundle\Entity;
+namespace Asian\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,13 +25,9 @@ class User extends BaseUser
     protected $id;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Group")
-	 * @ORM\JoinTable(name="fos_user_user_group",
-	 *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-	 *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
-	 * )
+	 * @ORM\Column(type="string", length=255)
 	 */
-    protected $groups;
+	protected $token;
 
 	/**
 	 * User constructor.
@@ -39,5 +35,29 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
+    }
+
+    /**
+     * Set token
+     *
+     * @param string $token
+     *
+     * @return User
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get token
+     *
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
     }
 }
