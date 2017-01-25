@@ -65,6 +65,6 @@ class User extends BaseUser
     {
     	$encoder = $factory->getEncoder($this);
 
-    	return ($encoder->isPasswordValid($this->getPassword(),$password,$this->getSalt())) ? "true" : "false";
+    	return $encoder->isPasswordValid($this->getPassword(),$password, $this->getSalt());
     }
 }

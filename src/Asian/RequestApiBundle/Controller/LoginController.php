@@ -49,17 +49,17 @@ class LoginController extends Controller
 
             $helper = new Data();
 
-			$token = $helper->generateToken($user, $request->request->get('password'),
+			$token = $helper->generateToken($user, $request->query->get('password'),
 				$request->headers->get('timestamp'));
 
-			if ($request->headers->get('token') !== $token) {
+			if ($request->headers->get('token') != $token) {
 				throw new Exception();
 			}
 
 			return $this->json(array('token' => $token));
 
 		} catch (Exception $e) {
-			return $this->json(array('token' => "lol"));
+			throw  new HttpException(400, "Invalid user data");
 		}
 	}
 }
