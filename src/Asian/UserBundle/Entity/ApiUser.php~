@@ -1,0 +1,56 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: marmelad
+ * Date: 26.01.2017
+ * Time: 9:52
+ */
+
+namespace Asian\UserBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="Asian\UserBundle\Repository\ApiUserRepository")
+ * @ORM\Table(name="api_user")
+ */
+class ApiUser
+{
+	/**
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	protected $id;
+
+	/**
+	 * @ORM\Column(type="string", length=25)
+	 */
+	protected $username;
+
+	/**
+	 * @ORM\Column(type="string", length=50)
+	 */
+	protected $password;
+
+	/**
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $AOKey;
+
+	/**
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $AOToken;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="User", mappedBy="api_id")
+	 */
+	private $users;
+
+	public function __construct()
+	{
+		$this->users = new ArrayCollection();
+	}
+}

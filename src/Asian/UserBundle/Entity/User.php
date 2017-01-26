@@ -25,10 +25,25 @@ class User extends BaseUser
     protected $id;
 
 	/**
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
 	protected $token;
 
+	/**
+	 * @ORM\Column(name="last_activity", type="datetime", nullable=true)
+	 */
+	protected $lastActivity;
+
+	/**
+	 * @ORM\Column(name="last_activity_api", type="datetime", nullable=true)
+	 */
+	protected $lastActivityApi;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="ApiUser", inversedBy="users")
+	 * @ORM\JoinColumn(name="api_id", referencedColumnName="id")
+	 */
+	private $apiUser;
 	/**
 	 * User constructor.
 	 */
@@ -66,5 +81,77 @@ class User extends BaseUser
     	$encoder = $factory->getEncoder($this);
 
     	return $encoder->isPasswordValid($this->getPassword(),$password, $this->getSalt());
+    }
+
+    /**
+     * Set lastActivity
+     *
+     * @param \DateTime $lastActivity
+     *
+     * @return User
+     */
+    public function setLastActivity($lastActivity)
+    {
+        $this->lastActivity = $lastActivity;
+
+        return $this;
+    }
+
+    /**
+     * Get lastActivity
+     *
+     * @return \DateTime
+     */
+    public function getLastActivity()
+    {
+        return $this->lastActivity;
+    }
+
+    /**
+     * Set lastActivityApi
+     *
+     * @param \DateTime $lastActivityApi
+     *
+     * @return User
+     */
+    public function setLastActivityApi($lastActivityApi)
+    {
+        $this->lastActivityApi = $lastActivityApi;
+
+        return $this;
+    }
+
+    /**
+     * Get lastActivityApi
+     *
+     * @return \DateTime
+     */
+    public function getLastActivityApi()
+    {
+        return $this->lastActivityApi;
+    }
+
+    /**
+     * Set apiUser
+     *
+     * @param \Asian\UserBundle\Entity\ApiUser $apiUser
+     *
+     * @return User
+     */
+    public function setApiUser(\Asian\UserBundle\Entity\ApiUser $apiUser = null)
+    {
+        $this->apiUser = $apiUser;
+
+        return $this;
+    }
+
+    /**
+     * Get apiUser
+     *
+     * @return \Asian\UserBundle\Entity\ApiUser
+     */
+    public function getApiUser()
+    {
+        return $this->apiUser;
     }
 }

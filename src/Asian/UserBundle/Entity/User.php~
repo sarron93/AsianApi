@@ -12,7 +12,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Asian\UserBundle\Repository\UserRepository")
  * @ORM\Table(name="fos_user")
  */
 class User extends BaseUser
@@ -25,10 +25,25 @@ class User extends BaseUser
     protected $id;
 
 	/**
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
 	protected $token;
 
+	/**
+	 * @ORM\Column(name="last_activity", type="datetime", nullable=true)
+	 */
+	protected $lastActivity;
+
+	/**
+	 * @ORM\Column(name="last_activity_api", type="datetime", nullable=true)
+	 */
+	protected $lastActivityApi;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="ApiUser", inversedBy="users")
+	 * @ORM\JoinColumn(name="api_id", referencedColumnName="id")
+	 */
+	private $apiUser;
 	/**
 	 * User constructor.
 	 */
@@ -59,5 +74,12 @@ class User extends BaseUser
     public function getToken()
     {
         return $this->token;
+    }
+
+    public function isPasswordValid($password, $factory)
+    {
+    	$encoder = $factory->getEncoder($this);
+
+    	return $encoder->isPasswordValid($this->getPassword(),$password, $this->getSalt());
     }
 }

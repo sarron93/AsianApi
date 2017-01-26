@@ -2,3 +2,8 @@ services:
 #    asian_user.example:
 #        class: Asian\UserBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    asian_user.registration:
+        class: Asian\UserBundle\EventListener\RegistrationListener
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: kernel.event_subscriber }
