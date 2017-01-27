@@ -83,6 +83,37 @@ class User extends BaseUser
     	return $encoder->isPasswordValid($this->getPassword(),$password, $this->getSalt());
     }
 
+	/**
+	 * is Id user
+	 *
+	 * @return bool
+	 */
+    public function isIdUser()
+    {
+    	if ($this->getId()) {
+    		return true;
+	    }
+	    return false;
+    }
+
+	/**
+	 * check api user
+	 *
+	 * @return bool
+	 */
+    public function isApiUser()
+    {
+	    if (is_null($this->getApiUser())) {
+		    return false;
+	    }
+
+	    if (!$this->getApiUser()->getId()) {
+		    return false;
+	    }
+
+	    return true;
+    }
+
     /**
      * Set lastActivity
      *

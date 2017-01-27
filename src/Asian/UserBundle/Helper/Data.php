@@ -25,4 +25,14 @@ class Data
 		return sha1($timestamp . $user->getUsername()
 					. $timestamp . $password);
 	}
+
+	public function getApiLoginUrl()
+	{
+		return "https://webapi.asianodds88.com/AsianOddsService/Login";
+	}
+
+	public function getApiRegisterUrl()
+	{
+		return "https://webapi.asianodds88.com/AsianOddsService/Register";
+	}
 }
