@@ -84,16 +84,19 @@ class User extends BaseUser
     }
 
 	/**
-	 * is Id user
+	 * checking user data
 	 *
 	 * @return bool
 	 */
-    public function isIdUser()
+    public function checkUser($token)
     {
-    	if ($this->getId()) {
-    		return true;
+	    if (!$this->getId()) {
+		    return false;
 	    }
-	    return false;
+	    if ($this->getToken() != $token) {
+	    	return false;
+	    }
+	    return true;
     }
 
 	/**

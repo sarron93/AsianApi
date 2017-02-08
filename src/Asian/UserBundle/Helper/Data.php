@@ -35,4 +35,14 @@ class Data
 	{
 		return "https://webapi.asianodds88.com/AsianOddsService/Register";
 	}
+
+	public function getApiLeaguesUrl()
+	{
+		return "https://webapi.asianodds88.com/AsianOddsService/GetLeagues";
+	}
+
+	public function getApiFeedsUrl()
+	{
+		return "https://webapi.asianodds88.com//AsianOddsService/GetFeeds";
+	}
 }

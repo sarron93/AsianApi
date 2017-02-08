@@ -39,11 +39,7 @@ class LoginController extends Controller
 				throw new Exception();
 			}
 
-			if (is_null($user)) {
-            	throw new Exception();
-            }
-
-            if (!$user->isIdUser()) {
+            if (!$user->getId()) {
 				throw  new Exception();
             }
 
@@ -89,18 +85,13 @@ class LoginController extends Controller
 			$user = $this->get('fos_user.user_manager')
 				->findUserByUsername($request->query->get('username'));
 
-			if (is_null($user)) {
+			if (!$user->checkUser($request->headers->get('token'))) {
 				throw  new Exception();
 			}
 
-			if (!$user->isIdUser() && !$user->isApiUser()) {
+			if (!$user->isApiUser()) {
 				throw new Exception();
 			}
-
-			if (!($user->getToken() == $request->headers->get('token'))) {
-				throw new Exception();
-			}
-
 
 			if ($apiHelper->isLoggedIn($user->getApiUser(), $request->headers->get('accept'))) {
 				return $this->json(
