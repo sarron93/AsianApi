@@ -10,6 +10,7 @@ namespace Asian\RequestApiBundle\Helper;
 
 use Asian\UserBundle\Entity\ApiUser;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Unirest;
 
 
@@ -26,7 +27,7 @@ class Data
 
 		$response = Unirest\Request::get(self::URL_LOGGED, $headers);
 		if ($response->code != 200) {
-			throw new Exception();
+			throw new HttpException($response->code, 'Response Error');
 		}
 
 		if ($response->body->Code == -1) {

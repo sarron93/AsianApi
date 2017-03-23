@@ -50,7 +50,6 @@ class LoginController extends Controller
 
 			$token = $helper->generateToken($user, $request->query->get('password'),
 				$request->headers->get('timestamp'));
-
 			$user->setToken($token);
 
 			$em = $this->getDoctrine()->getManager();
@@ -75,7 +74,6 @@ class LoginController extends Controller
 	{
 
 		try {
-
 			$apiHelper = new \Asian\RequestApiBundle\Helper\Data();
 
 			$helper = new Data();
@@ -86,7 +84,6 @@ class LoginController extends Controller
 			if (!$user->checkUser($request->headers->get('token'))) {
 				throw  new Exception();
 			}
-
 			if (!$user->isApiUser()) {
 				throw new Exception();
 			}
@@ -97,7 +94,6 @@ class LoginController extends Controller
 					'Result' => ['Token' => $user->getApiUser()->getAOToken()]
 				]);
 			}
-
 			$apiLoginUrl = $helper->getApiLoginUrl();
 			$headers = ['accept' => $request->headers->get('accept')];
 			$query = ['username' => $user->getApiUser()->getUsername(),
@@ -105,9 +101,8 @@ class LoginController extends Controller
 			];
 
 			$response = Unirest\Request::get($apiLoginUrl, $headers, $query);
-
 			if ($response->code != 200) {
-				throw new Exception();
+				throw new HttpException($response->code, 'Response Error');
 			}
 
 			if ($response->body->Code == 0) {

@@ -104,7 +104,6 @@ class BettingController extends Controller
 			];
 
 			$response = Unirest\Request::get($helper->getApiLeaguesUrl(), $headers, $query);
-
 			if ($response->code !== 200) {
 				throw new HttpException($response->code, 'Response Error');
 			}
@@ -112,6 +111,52 @@ class BettingController extends Controller
 			return $this->json($response->body);
 		} catch (Exception $e) {
 			throw new HttpException('400', 'Invalid Data');
+		}
+	}
+
+	/**
+	 * @Route("getPlacement")
+	 * @Method("GET")
+	 */
+	public function getPlacementInfoAction(Request $request)
+	{
+		try {
+			$helper = new Data();
+			$user = $this->get('fos_user.user_manager')->findUserByUsername($request->query->get('username'));
+			if (!$user->checkUser($request->headers->get('token'))) {
+				throw new Exception('Invalid user data');
+			}
+
+			$apiUser = $user->getApiUser();
+
+			$headers = [
+				'AOToken' => $apiUser->getAOToken(),
+				'Accept' => $request->headers->get('accept')
+			];
+
+			$matchId = $request->query->get('match_id');
+			$isFulltime = $request->query->get('is_full_time');
+			$gameId = $request->query->get('game_id');
+			$gameType = $request->query->get('game_type');
+			$oddsName = $request->query->get('odds_name');
+			$oddsFormat = $request->query->get('odds_format') ?: '00';
+			$bookies = $request->query->get('bookies');
+			$marketTypeId = $request->query->get('market_type_id');
+			$sportsType = $request->query->get('sports_type') ?: 1;
+
+			$body = [
+				'GameId' => $gameId,
+				'GameType' => $gameType,
+				'IsFullTime' => $isFulltime,
+				'Bookies' => $bookies,
+				'MarketTypeId' => $marketTypeId,
+				'OddsFormat' => $oddsFormat,
+				'OddsName' => $oddsName,
+				"SportsType" => $sportsType
+			];
+
+		} catch (Exception $e) {
+			throw new HttpException('400', $e->getMessage());
 		}
 	}
 }
