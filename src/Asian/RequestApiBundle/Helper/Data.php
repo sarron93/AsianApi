@@ -15,16 +15,16 @@ use Unirest;
 
 class Data
 {
-	const URL_LOGGED = "https://webapi.asianodds88.com//AsianOddsService/IsLoggedIn";
+	const URL_LOGGED = "https://webapi.asianodds88.com/AsianOddsService/IsLoggedIn";
 
 	public function isLoggedIn(ApiUser $apiUser, $accept)
 	{
+
 		$headers = ['AOToken' => $apiUser->getAOToken(),
 					'accept' => $accept,
 		];
 
 		$response = Unirest\Request::get(self::URL_LOGGED, $headers);
-
 		if ($response->code != 200) {
 			throw new Exception();
 		}

@@ -38,7 +38,6 @@ class LoginController extends Controller
 			if (!$request->headers->get('timestamp')) {
 				throw new Exception();
 			}
-
             if (!$user->getId()) {
 				throw  new Exception();
             }
@@ -58,11 +57,9 @@ class LoginController extends Controller
 			$em->persist($user);
 			$em->flush();
 
-
 			if ($request->headers->get('token') != $token) {
 				throw new Exception();
 			}
-
 			return $this->json(array('id' => $user->getId(), 'token' => $token));
 
 		} catch (Exception $e) {
@@ -76,6 +73,7 @@ class LoginController extends Controller
 	 */
 	public function loginApiAction(Request $request)
 	{
+
 		try {
 
 			$apiHelper = new \Asian\RequestApiBundle\Helper\Data();

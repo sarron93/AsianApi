@@ -43,6 +43,6 @@ class Data
 
 	public function getApiFeedsUrl()
 	{
-		return "https://webapi.asianodds88.com//AsianOddsService/GetFeeds";
+		return "https://webapi.asianodds88.com/AsianOddsService/GetFeeds";
 	}
 }
