@@ -10,6 +10,7 @@ namespace Asian\RequestApiBundle\Controller;
 
 use Asian\UserBundle\Helper\Data;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -115,7 +116,7 @@ class BettingController extends Controller
 	}
 
 	/**
-	 * @Route("getPlacement")
+	 * @Route("getPlacement/")
 	 * @Method("GET")
 	 */
 	public function getPlacementInfoAction(Request $request)
@@ -131,7 +132,8 @@ class BettingController extends Controller
 
 			$headers = [
 				'AOToken' => $apiUser->getAOToken(),
-				'Accept' => $request->headers->get('accept')
+				'Accept' => $request->headers->get('accept'),
+				'Content-Type' => 'application/json',
 			];
 
 			$matchId = $request->query->get('match_id');
@@ -142,9 +144,21 @@ class BettingController extends Controller
 			$oddsFormat = $request->query->get('odds_format') ?: '00';
 			$bookies = $request->query->get('bookies');
 			$marketTypeId = $request->query->get('market_type_id');
-			$sportsType = $request->query->get('sports_type') ?: 1;
+			$sportsType = $request->query->get('sports_type') ?: 0;
+			$getParams = [
+				'matchId' => $matchId,
+				'isFullTime' => $isFulltime,
+				'gameId' => $gameId,
+				'gameType' => $gameType,
+				'oddsName' => $oddsName,
+				'oddsFormat' => $oddsFormat,
+			];
+			$url = $helper->getApiPlacementInfo() . '?';
+			$params = http_build_query($getParams);
 
-			$body = [
+			$url .= $params;
+
+			$data = [
 				'GameId' => $gameId,
 				'GameType' => $gameType,
 				'IsFullTime' => $isFulltime,
@@ -154,9 +168,68 @@ class BettingController extends Controller
 				'OddsName' => $oddsName,
 				"SportsType" => $sportsType
 			];
+			$body = Unirest\Request\Body::Json($data);
 
+			$response = Unirest\Request::post($url, $headers, $body);
+
+
+			if ($response->code != 200) {
+				throw  new HttpException($response->code, 'Response error code');
+			}
+
+			if ($response->body->Code < 0) {
+				throw new Exception($response->body->Message);
+			}
+
+			$result = $response->body->Result->OddsPlacementData[0];
+
+			if ($result->Odds < $request->query->get('odds')) {
+				return $this->json([
+					'code' => 0 ,
+					'message' => 'Коэффициент упал ниже ожидаемого']);
+			}
+
+			$amount = $result->MinimumAmount;
+			$oddPlacementId = $result->OddPlacementId;
+			$bookieOdds = $bookies . ':' . $result->Odds;
+
+			$postParams = [
+				'IsFullTime' => $isFulltime,
+				'MarketTypeId' => $marketTypeId,
+				'PlaceBetId' => $oddPlacementId,
+				'GameId' => $gameId,
+				'GameType' => $gameType,
+				'OddsName' => $oddsName,
+				'OddsFormat' => $oddsFormat,
+				'BookieOdds' => $bookieOdds,
+				'SportsType' => $sportsType,
+				'Amount' => $amount,
+			];
+
+			$placeBetResponce = $this->_placeBetAction($postParams, $headers);
+			
+			if ($placeBetResponce->code != 200) {
+				throw new HttpException($response->code, 'place bet request error code');
+			}
+
+			if ($placeBetResponce->body->Code < 0) {
+				throw new Exception($response->body->Message);
+			}
+
+			return $this->json($placeBetResponce->body);
 		} catch (Exception $e) {
 			throw new HttpException('400', $e->getMessage());
 		}
 	}
+
+	protected function _placeBetAction($postParams, $headers)
+	{
+		$helper = new Data();
+		$url = $helper->getPlaceBet();
+		$body = Unirest\Request\Body::Json($postParams);
+
+		$response = Unirest\Request::post($url, $headers, $body);
+		return $response;
+	}
+
 }

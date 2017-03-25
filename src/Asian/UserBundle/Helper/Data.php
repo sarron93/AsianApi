@@ -12,6 +12,7 @@ use Asian\UserBundle\Entity\User;
 
 class Data
 {
+	const API_URL = "https://webapi.asianodds88.com/";
 	/**
 	 * generation Token
 	 *
@@ -28,21 +29,30 @@ class Data
 
 	public function getApiLoginUrl()
 	{
-		return "https://webapi.asianodds88.com/AsianOddsService/Login";
+		return self::API_URL."AsianOddsService/Login";
 	}
 
 	public function getApiRegisterUrl()
 	{
-		return "https://webapi.asianodds88.com/AsianOddsService/Register";
+		return self::API_URL."AsianOddsService/Register";
 	}
 
 	public function getApiLeaguesUrl()
 	{
-		return "https://webapi.asianodds88.com/AsianOddsService/GetLeagues";
+		return self::API_URL."AsianOddsService/GetLeagues";
 	}
 
 	public function getApiFeedsUrl()
 	{
-		return "https://webapi.asianodds88.com/AsianOddsService/GetFeeds";
+		return self::API_URL."AsianOddsService/GetFeeds";
+	}
+	public function getApiPlacementInfo()
+	{
+		return self::API_URL."/AsianOddsService/GetPlacementInfo";
+	}
+
+	public function getPlaceBet()
+	{
+		return self::API_URL."AsianOddsService/PlaceBet";
 	}
 }
