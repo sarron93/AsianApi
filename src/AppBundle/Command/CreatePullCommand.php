@@ -2,13 +2,28 @@
 
 namespace AppBundle\Command;
 
+use Asian\RequestApiBundle\Model\Cache;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use AppBundle\Command\Helper\Data;
+use Asian\UserBundle\Helper\Data as HelperUser;
+use Unirest;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class CreatePullCommand extends ContainerAwareCommand
 {
+	const BOOKIES = 'ALL';
+	const SPORTS = 1;
+	const LEAGUES = 'ALL';
+	const ODDS_FORMAT = '00';
+	const MARKET_LIVE = 0;
+	const MARKET_TODAY = 1;
+	const MARKET_EARLY = 2;
+	const ACCEPT = 'application/json';
+
 	private $_em;
 	private $_apiUser;
 	private $_kernel;
@@ -16,12 +31,31 @@ class CreatePullCommand extends ContainerAwareCommand
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$helper = new Data();
-		$this->_em =  $this->getContainer()->get('doctrine.orm.entity_manager');
+		$this->_em = $this->getContainer()->get('doctrine.orm.entity_manager');
 		$this->_kernel = $this->getContainer()->get('kernel');
-
 		$this->_apiUser = $this->_em->getRepository('AsianUserBundle:ApiUser')->getFirstElement();
+		$memcache = new Cache();
 
-		$helper->isLoggedIn($this->_apiUser, $this->_kernel->getLogDir());
+		try {
+			if (!$helper->isLoggedInCommand($this->_apiUser)) {
+				$this->_loginApi();
+			}
+
+			$feedsLive = $this->_getFeeds(self::MARKET_LIVE);
+			$feedsToday = $this->_getFeeds(self::MARKET_TODAY);
+			$feedsEarly = $this->_getFeeds(self::MARKET_EARLY);
+			$memcache->setParam('feeds_live', $feedsLive);
+			$memcache->setParam('feeds_today', $feedsToday);
+			$memcache->setParam('feeds_early', $feedsEarly);
+
+		} catch (Exception $e) {
+			$log = new Logger('isLoggedIn');
+			$log->pushHandler(new StreamHandler(
+				$this->_kernel->getLogDir() . DIRECTORY_SEPARATOR . 'console_feeds.log',
+				Logger::WARNING
+			));
+			$log->addWarning($e->getMessage());
+		}
 	}
 	protected function configure()
 	{
@@ -30,8 +64,99 @@ class CreatePullCommand extends ContainerAwareCommand
 			->setHelp('This command create json file into folder /var/pool/');
 	}
 
-	private function isLoggedIn()
+	/**
+	 * login Api Action
+	 *
+	 * @return void
+	 */
+	private function _loginApi()
 	{
+		$helper = new HelperUser();
+		$apiLoginUrl = $helper->getApiLoginUrl();
+		$headers = ['accept' => self::ACCEPT];
+		$query = ['username' => $this->_apiUser->getUsername(),
+			'password' => $this->_apiUser->getPassword()
+		];
 
+		$response = Unirest\Request::get($apiLoginUrl, $headers, $query);
+		if ($response->code != 200) {
+			throw new Exception($response->code . ' Response Error');
+		}
+
+		if ($response->body->Code < 0) {
+			throw new Exception(json_decode($response->body));
+		}
+
+		$this->_apiUser->setAOKey($response->body->Result->Key);
+		$this->_apiUser->setAOToken($response->body->Result->Token);
+
+		$this->_em->persist($this->_apiUser);
+		$this->_em->flush();
+
+		$this->_registerApi();
+	}
+
+	/**
+	 * register account api
+	 *
+	 * @return void
+	 */
+	private function _registerApi()
+	{
+		$helper = new HelperUser();
+		$sendHeaders = [
+			'AOKey' => $this->_apiUser->getAOKey(),
+			'AOToken' => $this->_apiUser->getAOToken(),
+			'accept' => self::ACCEPT,
+		];
+
+		$query = [
+			'username' => $this->_apiUser->getUsername(),
+		];
+
+		$response = Unirest\Request::get($helper->getApiRegisterUrl(), $sendHeaders, $query);
+
+		if ($response->code != 200) {
+			throw new Exception($response->code . ' Response Error');
+		}
+
+		if ($response->body->Code < 0) {
+			throw new Exception(json_decode($response->body));
+		}
+	}
+
+	/**
+	 * get feeds
+	 *
+	 * @param integer $marketTypeId market type Live, Today, Early
+	 * @return mixed
+	 */
+	private function _getFeeds($marketTypeId)
+	{
+		$helper = new HelperUser();
+		$headers = [
+			'AOToken' => $this->_apiUser->getAOToken(),
+			'Accept' => self::ACCEPT
+		];
+
+		$query = [
+			'bookies' => self::BOOKIES,
+			'sportsType' => self::SPORTS,
+			'leagues' => self::LEAGUES,
+			'oddsFormat' => self::ODDS_FORMAT,
+			'marketTypeId' => $marketTypeId,
+		];
+
+		$response = Unirest\Request::get($helper->getApiFeedsUrl(), $headers, $query);
+
+		if ($response->code != 200) {
+			throw new Exception($response->code . ' Response Error');
+		}
+
+		if ($response->body->Code < 0) {
+			throw new Exception(json_decode($response->body));
+		}
+
+		return $response->body;
 	}
 }

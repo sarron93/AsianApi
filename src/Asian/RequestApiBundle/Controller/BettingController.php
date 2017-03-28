@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Asian\RequestApiBundle\Model\Cache;
 use Unirest;
 
 
@@ -28,8 +29,6 @@ class BettingController extends Controller
 	public function getFeedsAction(Request $request)
 	{
 		try {
-			$helper = new Data();
-
 			$user = $this->get('fos_user.user_manager')
 				->findUserByUsername($request->query->get('username'));
 
@@ -37,34 +36,12 @@ class BettingController extends Controller
 				throw new Exception();
 			}
 
-			$bookies = $request->query->get('bookies') ? $request->query->get('bookies') : 'ALL';
-			$sports = $request->query->get('sports') ? $request->query->get('sports') : 1;
-			$leagues = $request->query->get('leagues') ? $request->query->get('leagues') : 'ALL';
-			$oddsFormat = $request->query->get('oddsFormat') ? $request->query->get('oddsFormat') : '00';
-			$marketTypeId = $request->query->get('marketTypeId') ? $request->query->get('marketTypeId') : '0';
-
-			$apiUser = $user->getApiUser();
-
-			$headers = [
-				'AOToken' => $apiUser->getAOToken(),
-				'Accept' => $request->headers->get('accept')
-			];
-
-			$query = [
-				'bookies' => $bookies,
-				'sportsType' => $sports,
-				'leagues' => $leagues,
-				'oddsFormat' => $oddsFormat,
-				'marketTypeId' => $marketTypeId,
-			];
-
-			$response = Unirest\Request::get($helper->getApiFeedsUrl(), $headers, $query);
-
-			if ($response->code !== 200) {
-				throw new HttpException($response->code, 'Response Error');
+			$memcache = new Cache();
+			$feeds = $memcache->getParam('feeds_live');
+			if (!$feeds) {
+				return $this->json(['Code' => '-1']);
 			}
-
-			return $this->json($response->body);
+			return $this->json($feeds);
 
 		} catch (Exception $e) {
 			throw new HttpException(400, 'Invalid Data');
@@ -207,7 +184,7 @@ class BettingController extends Controller
 			];
 
 			$placeBetResponce = $this->_placeBetAction($postParams, $headers);
-			
+
 			if ($placeBetResponce->code != 200) {
 				throw new HttpException($response->code, 'place bet request error code');
 			}
