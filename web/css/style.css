@@ -1,0 +1,423 @@
+.account_header, .pending_header{
+    padding: 3px;
+    text-align: center;
+    background-color: #141648;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-color: #808080;
+    border-bottom-color: #808080;
+    color: #FFFFFF;
+    background-image: url('../img/bg_accountsummary.png');
+    background-repeat: repeat-x;
+}
+.account_header>span{
+    font-weight: bold;
+}
+.tableAccountSummaryItem{
+    width: 100%;
+    margin-bottom: 5px;
+}
+.tableAccountSummary{
+    width: 100%;
+}
+.trAccountSummaryCredit{
+    font-weight: bold;
+}
+.tdAccountSummaryName{
+    padding-left: 3px;
+    width: 50%;
+    min-width: 85px;
+}
+.tdAccountSummaryValue{
+    padding-right: 3px;
+    text-align: right;
+    width: 50%;
+    min-width: 85px;
+}
+.spanAcsum_credit{
+    color: #9F0000;
+}
+.tablePending{
+    width: 100%;
+    margin: 5px 0px;
+}
+.tdPendingBets{
+    width: 50%;
+    min-width: 85px;
+}
+.pending_bets{
+    float: left;
+    width: 50%;
+    border-right: 2px solid #808080;
+    color: #19FFDB;
+    font-weight: bold;
+}
+.my_bets{
+    float:right;
+    width: 50%;
+    font-weight: bold;
+}
+.tree_leagues, .tree_leagues_subitem{
+    list-style-type: none;
+    padding-left: 0px;
+    cursor: pointer;
+    font-size: 8pt;
+    font-weight: bold;
+}
+.tree_leagues_subitem{
+    padding-left: 0px;
+    color: #0000FF;
+}
+.tree_leagues_subitem.unrolled{
+    color: #0000FF;
+}
+.tree_leagues_subitem.unrolled{
+    color: #9F0000;
+}
+.tree_leagues_main_item_text:hover, .tree_leagues_item:hover, .tree_leagues_item.active:hover{
+    background-color: #EBEBB4;;
+}
+.favorites{
+    color: #0000FF;
+}
+.tree_icon{
+    vertical-align: baseline;
+    margin-right: 2px;
+}
+.tree_leagues_first_node {
+    padding-left: 5px;
+}
+.tree_leagues_second_node {
+    padding-left: 8px;
+    list-style-type: none;
+}
+.tree_leagues_second_node.rolled{
+    display: none;
+}
+.tree_leagues_second_node.unrolled{
+    display: block;
+}
+.tree_leagues_item{
+    border: 2px solid #E9E6E6;
+    border-top: none;
+    border-right: none;
+    border-left-width: 10px;
+    padding-left: 2px;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    color: #000000;
+}
+.tree_leagues_item.active{
+    background-color: #D2F0BE;
+}
+/*Main content*/
+.league_head_tblt{
+    padding: 3px;
+    color: #ffffff;
+    background-image: url(../img/bg_settings_header2.png);
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+.league_head_tblt td{
+    font-weight: bold;
+    text-align: center;
+    border: 1px outset #EEEEEE;
+}
+.td_hdr_time{
+    width: 68px;
+}
+.td_hdr_event{
+    width: 182px;
+}
+.td_hdr_1X2{
+    width: 46px;
+}
+.td_hdr_HDR{
+    width: 90px;
+}
+.td_hdr_OU{
+    width: 102px;
+}
+.leaugegroup{
+    /*background-color: #B4DCBE;*/
+}
+.leaguegroup_heder{
+    width: 750px;
+    background: url(../img/bg_accountsummary.png);
+    background-repeat: repeat;
+    color: #ffffff;
+    font-size: 9pt;
+    font-weight: bold;
+}
+.favoff, .favon{
+    float: left;
+    margin: 5px 5px 0px 5px;
+    width: 10px;
+    height: 10px;
+    background: url(../img/fav_off.png);
+    cursor: pointer;
+}
+.favon{
+    background: url(../img/fav_on.png);
+}
+.leagues_header_name{
+    float: left;
+    height: 20px;
+    text-transform: uppercase;
+}
+.leagues_header_markettype{
+    margin-right: 3px;
+    float:right;
+    height: 20px;
+    color: #E1CE49;
+}
+.gametable{
+    border-color: #C8A0A0;
+    padding: 3px;
+    /*width: 750px;*/
+    font-weight: bold;
+    font-size: 8pt;
+    border-right: 1px solid #C8A0A0;
+    border-bottom: 1px solid #C8A0A0;
+    border-left: 1px solid #C8A0A0;
+    background: linear-gradient(to top, #ECD9C5, #F8E4D4);
+    border-collapse: separate;
+    /*cursor: pointer;*/
+}
+.gametable_td_time{
+    width: 68px;
+    border-right: 1px ridge #C8A0A0;
+    text-align: center;
+}
+.ScoreOrStartTime, .MatchTime, .MatchFavoff, .MatchFavon{
+    /*margin: 0 auto;*/
+    text-align: center;
+}
+.MatchTime{
+    color: #FF0000;
+}
+.MatchFavoff{
+    margin: 0px auto 3px auto;
+    width: 10px;
+    height: 10px;
+    background: url(../img/fav_off.png);
+    cursor: pointer;
+}
+.MatchFavon{
+    background: url(../img/fav_on.png);
+}
+.gametable_td_event{
+    width: 182px;
+    border-right: 1px ridge #C8A0A0;
+}
+.spanRedCardsHome::before{
+    background: url(../img/redCard.png) no-repeat;
+}
+.spanRedCardsHome, .spanRedCardsAway{
+    float: left;
+    visibility: visible;
+    margin-left: 3px;
+    padding-left: 10px;
+    background: url(../img/redCard.png) no-repeat;
+    background-position: left center;
+}
+.spanRedCardsHome.disable, .spanRedCardsAway.disable{
+    visibility: hidden;
+}
+.Home, .Away{
+    color: #0000C0;
+    float: left;
+}
+.gametable_td_ft_1x2{
+    width: 45px;
+    text-align: left;
+    padding-left: 5px;
+}
+.FTHomeOdd, .FTAwayOdd, .FTDrawOdd{
+    cursor: pointer;
+}
+.highlight_green{
+    background-color: #A4E778;
+}
+.highlight_red{
+    background-color: #FFAAAA;
+}
+.highlight_yellow{
+    background-color: #FFFF00;
+}
+.gametable_td_ft_hdp_1{
+    width: 45px;
+    padding-right: 5px;
+    text-align: right;
+    color: dodgerblue;
+    vertical-align: top;
+}
+.gametable_td_ft_hdp_2{
+    width: 45px;
+    padding-right: 5px;
+    text-align: right;
+    vertical-align: top;
+}
+.FTHDPHome, .FTHDPAway{
+    width: 100%;
+    height: 33%;
+}
+.gametable_td_ft_ou_1{
+    width: 40px;
+    color: dodgerblue;
+    padding-right: 5px;
+    text-align: right;
+    vertical-align: top;
+}
+.gametable_td_ft_ou_2{
+    width: 13px;
+    color: #A9A9A9;
+    padding-right: 5px;
+    text-align: right;
+    vertical-align: top;
+}
+.gametable_td_ft_ou_3{
+    width: 44px;
+    text-align: right;
+    padding-right: 5px;
+    vertical-align: top;
+    border-right: 1px ridge #C8A0A0;
+}
+.gametable_td_ht_1x2{
+    width: 45px;
+    text-align: left;
+    padding-left: 5px;
+}
+.gametable_td_ht_hdp_1{
+    width: 45px;
+    padding-right: 5px;
+    text-align: right;
+    color: dodgerblue;
+    vertical-align: top;
+}
+.gametable_td_ht_hdp_2{
+    width: 45px;
+    padding-right: 5px;
+    text-align: right;
+    vertical-align: top;
+}
+.gametable_td_ht_ou_1{
+    width: 40px;
+    color: dodgerblue;
+    padding-right: 5px;
+    text-align: right;
+    vertical-align: top;
+}
+.gametable_td_ht_ou_2{
+    width: 13px;
+    color: #A9A9A9;
+    padding-right: 5px;
+    text-align: right;
+    vertical-align: top;
+}
+.gametable_td_ht_ou_3{
+    width: 42px;
+    text-align: right;
+    vertical-align: top;
+}
+.FTHDPHomeOdd, .FTHDPAwayOdd, .FTOver, .FTUnder, .HTHomeOdd, .HTAwayOdd, .HTDrawOdd, .HTHDPHomeOdd, .HTHDPAwayOdd, .HTOver, .HTUnder{
+    cursor: pointer;
+}
+.samehidegroup{
+    display: none;
+}
+/*end Main content*/
+body{
+    background: #CCCCCC;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-size: .80em;
+    font-size: small;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000000;
+    min-width: 1000px;
+    padding-bottom: 33px;
+}
+.container{
+    background-color: #fff;
+}
+.leagues_header{
+    padding: 3px;
+    text-align: center;
+    background-color: #141648;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-color: #808080;
+    border-bottom-color: #808080;
+    color: #FFFFFF;
+    background-image: url('../img/bg_accountsummary.png');
+    background-repeat: repeat-x;
+}
+.leagues_header span{
+    font-weight: bold;
+}
+.divMarketMenuMain{
+    padding: 3px;
+    font-size: 8pt;
+    margin-top: 3px;
+    text-align: left;
+}
+.leauge_root:hover, .leaugeitem:hover, .igametable:hover {
+    background-color: #EBEBB4;
+    vertical-align:central;
+    cursor: pointer;
+}
+.lbl_favorite{
+    margin-bottom: 3px;
+}
+.FavMain:before{
+     content: url('../img/fav_main.png');
+}
+.FavMain {
+    vertical-align:bottom;
+    margin-right: 1px;
+}
+.spanMenuFavorites{
+    font-weight: bold;
+}
+.divFavoritesFootballSection{
+    vertical-align:bottom;
+}
+.divFavoritesFootballSection_icon{
+    margin-left: 5px;
+}
+.divFavoritesFootballSection_text{
+    font-weight: bold;
+}
+.cont_favorite{
+    margin-left: 10px;
+}
+.divFavoritesBasketballSection_icon{
+    margin-left: 5px;
+}
+.divFavoritesBasketballSection_text{
+    font-weight: bold;
+}
+.cont_favorite_basketball{
+    margin-left: 10px;
+}
+.imgMenuReset{
+    display: none;
+    visibility: hidden;
+    margin: 0px;
+}
+.footballIcon{
+    font-weight: bold;
+}
+.lbl_running{
+    margin-left: 5px;
+    cursor: pointer;
+}
+.in_running{
+    font-weight: bold;
+}
