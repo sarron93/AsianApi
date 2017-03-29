@@ -41,12 +41,21 @@ class CreatePullCommand extends ContainerAwareCommand
 				$this->_loginApi();
 			}
 
+			$leaguesLive = $this->_getLeagues(self::MARKET_LIVE);
+			$leaguesToday = $this->_getLeagues(self::MARKET_TODAY);
+			$leaguesEarly = $this->_getLeagues(self::MARKET_EARLY);
+
 			$feedsLive = $this->_getFeeds(self::MARKET_LIVE);
 			$feedsToday = $this->_getFeeds(self::MARKET_TODAY);
 			$feedsEarly = $this->_getFeeds(self::MARKET_EARLY);
+
 			$memcache->setParam('feeds_live', $feedsLive);
 			$memcache->setParam('feeds_today', $feedsToday);
 			$memcache->setParam('feeds_early', $feedsEarly);
+
+			$memcache->setParam('leagues_live', $leaguesLive);
+			$memcache->setParam('leagues_today', $leaguesToday);
+			$memcache->setParam('leagues_early', $leaguesEarly);
 
 		} catch (Exception $e) {
 			$log = new Logger('isLoggedIn');
@@ -126,6 +135,37 @@ class CreatePullCommand extends ContainerAwareCommand
 	}
 
 	/**
+	 * get leagues
+	 *
+	 * @return mixed
+	 */
+	private function _getLeagues($marketTypeId)
+	{
+		$helper = new HelperUser();
+		$headers = [
+			'AOToken' => $this->_apiUser->getAOToken(),
+			'Accept' => self::ACCEPT
+		];
+
+		$query = [
+			'bookies' => self::BOOKIES,
+			'sportsType' => self::SPORTS,
+			'marketTypeId' => $marketTypeId,
+		];
+
+		$response = Unirest\Request::get($helper->getApiLeaguesUrl(), $headers, $query);
+		if ($response->code !== 200) {
+			throw new Exception($response->code . ' Response Error');
+		}
+
+		if ($response->body->Code < 0) {
+			throw new Exception('get leagues method error');
+		}
+
+		return $response->body;
+	}
+
+	/**
 	 * get feeds
 	 *
 	 * @param integer $marketTypeId market type Live, Today, Early
@@ -152,9 +192,8 @@ class CreatePullCommand extends ContainerAwareCommand
 		if ($response->code != 200) {
 			throw new Exception($response->code . ' Response Error');
 		}
-
 		if ($response->body->Code < 0) {
-			throw new Exception(json_decode($response->body));
+			throw new Exception('Get feeds method error');
 		}
 
 		return $response->body;
