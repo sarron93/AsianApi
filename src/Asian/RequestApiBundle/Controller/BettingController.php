@@ -64,29 +64,15 @@ class BettingController extends Controller
 				throw new Exception();
 			}
 
-			$bookies = $request->query->get('bookies') ? $request->query->get('bookies') : 'ALL';
-			$sports = $request->query->get('sports') ? $request->query->get('sports') : 1;
-			$marketTypeId = $request->query->get('marketTypeId') ? $request->query->get('marketTypeId') : '0';
+			$memcache = new Cache();
 
-			$apiUser = $user->getApiUser();
+			$leagues = $memcache->getParam('leagues_live');
 
-			$headers = [
-				'AOToken' => $apiUser->getAOToken(),
-				'Accept' => $request->headers->get('accept')
-			];
-
-			$query = [
-				'bookies' => $bookies,
-				'sportsType' => $sports,
-				'marketTypeId' => $marketTypeId,
-			];
-
-			$response = Unirest\Request::get($helper->getApiLeaguesUrl(), $headers, $query);
-			if ($response->code !== 200) {
-				throw new HttpException($response->code, 'Response Error');
+			if (!$leagues) {
+				return $this->json(['Code' => '-1']);
 			}
 
-			return $this->json($response->body);
+			return $this->json($leagues);
 		} catch (Exception $e) {
 			throw new HttpException('400', 'Invalid Data');
 		}
