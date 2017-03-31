@@ -1,5 +1,413 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
 {% block body %}
-    Hello world
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 side-bar">
+            <div class="account">
+                <div class="account_header">
+                    <span>Account Summary</span>
+                </div>
+                <table id="tableAccountSummaryItem" class="tableAccountSummaryItem">
+                    <tbody>
+                        <tr class="trAccountSummaryCredit">
+                            <td class="tdAccountSummaryName">
+                                <span>Credit</span>
+                            </td>
+                            <td class="tdAccountSummaryValue">
+                                <span id="spanAcsum_credit" class="spanAcsum_credit">324.85 EUR</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table id="tableAccountSummary" class="tableAccountSummary">
+                    <tbody>
+                        <tr>
+                            <td class="tdAccountSummaryName">
+                                <span>Yesterday P&L</span>
+                            </td>
+                            <td class="tdAccountSummaryValue">
+                                <span id="spanAcsum_yesterday">0.0 EUR</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdAccountSummaryName">
+                                <span>Today P&L</span>
+                            </td>
+                            <td class="tdAccountSummaryValue">
+                                <span id="spanAcsum_today">0.0 EUR</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdAccountSummaryName">
+                                <span>Outstanding</span>
+                            </td>
+                            <td class="tdAccountSummaryValue">
+                                <span id="spanAcsum_outstanding">0.0 EUR</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdAccountSummaryName">
+                                <span>Open Bets</span>
+                            </td>
+                            <td class="tdAccountSummaryValue">
+                                <span id="spanAcsum_openbets">0</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pending">
+                <div class="pending_header clearfix">
+                    <div class="pending_bets">Pending Bets</div>
+                    <div class="my_bets">My Bets</div>
+                </div>
+            </div>
+            <table class="tablePending">
+                <tbody>
+                    <tr>
+                        <td class="tdPendingBets">
+                            <span>no pending bets</span>
+                        </td>
+                        <td class="tdPendingBets">
+                            <span></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="leagues">
+                <div class="leagues_header">
+                    <span>Leagues / Competitions</span>
+                </div>
+                <ul class="tree_leagues">
+                    <li class="tree_leagues_main_item favorites">
+                        <div class="tree_leagues_main_item_text">
+                            <img class="tree_icon" src="img/fav_main.png" alt="">Favorites
+                        </div>
+                    </li>
+                    <li class="tree_leagues_main_item">
+                        <div class="tree_leagues_main_item_text">
+                            <img class="tree_icon" src="img/footballIcon2.png" alt="">Football
+                        </div>
+                        <ul class="tree_leagues_first_node">
+                            <li class="tree_leagues_subitem unrolled">
+                                <div class="tree_leagues_main_item_text">
+                                    In Running (<span id="football_in_running">20</span>)
+                                </div>
+                                <ul class="tree_leagues_second_node unrolled">
+                                    <li class="tree_leagues_item">2017 Africa Cup of Nations U20</li>
+                                    <li class="tree_leagues_item">2017 Africa Cup of Nations U20 - No. of Corners</li>
+                                    <li class="tree_leagues_item">AFC Champions League</li>
+                                    <li class="tree_leagues_item">AFC Champions League - No. of Corners</li>
+                                    <li class="tree_leagues_item">Bulgaria First Professional Football League</li>
+                                    <li class="tree_leagues_item">Cyprus Womens Cup</li>
+                                    <li class="tree_leagues_item">Czech Republic Cup</li>
+                                    <li class="tree_leagues_item">English Central Reserve League</li>
+                                    <li class="tree_leagues_item">Four Nations Tournament Women (in Tourkey)</li>
+                                    <li class="tree_leagues_item">Hong Kong Reserve League</li>
+                                    <li class="tree_leagues_item">Hungaru Cap</li>
+                                    <li class="tree_leagues_item">Italy Lega Pro Cup</li>
+                                    <li class="tree_leagues_item">Italy Primavera Campionato U19</li>
+                                    <li class="tree_leagues_item">Italy Serie D Cup</li>
+                                    <li class="tree_leagues_item">Malaysia Super League</li>
+                                    <li class="tree_leagues_item">Moldova National Division</li>
+                                    <li class="tree_leagues_item">Oman Professional League</li>
+                                    <li class="tree_leagues_item">Russia Cup</li>
+                                    <li class="tree_leagues_item">Russia Cup - No. of Corners</li>
+                                    <li class="tree_leagues_item">Turkey League</li>
+                                </ul>
+                            </li>
+                            <li class="tree_leagues_subitem">
+                                <div class="tree_leagues_main_item_text">
+                                    Today (<span id="football_today">212</span>)
+                                </div>
+                            </li>
+                            <li class="tree_leagues_subitem">
+                                <div class="tree_leagues_main_item_text">
+                                    Early (<span id="football_early">551</span>)
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="tree_leagues_main_item">
+                        <div class="tree_leagues_main_item_text">
+                            <img class="tree_icon" src="img/basketball_icon.png" alt="">Basketball
+                        </div>
+                        <ul class="tree_leagues_first_node">
+                            <li class="tree_leagues_subitem rolled">
+                                <div class="tree_leagues_main_item_text">
+                                    In Running (<span id="basketball_in_running">1</span>)
+                                </div>
+                                <ul class="tree_leagues_second_node rolled">
+                                    <li class="tree_leagues_item">NBA 2017</li>
+                                </ul>
+                            </li>
+                            <li class="tree_leagues_subitem">
+                                <div class="tree_leagues_main_item_text">
+                                    Today (<span id="basketball_today">189</span>)
+                                </div>
+                            </li>
+                            <li class="tree_leagues_subitem">
+                                <div class="tree_leagues_main_item_text">
+                                    Early (<span id="basketball_early">10</span>)
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9 main-content">
+            <table class="league_head_tblt">
+                <tbody>
+                    <tr>
+                        <td rowspan="2" class="td_hdr_time">TIME</td>
+                        <td rowspan="2" class="td_hdr_event">EVENT</td>
+                        <td colspan="3">FULL TIME</td>
+                        <td colspan="3">FIRST HALF</td>
+                    </tr>
+                    <tr>
+                        <td class="td_hdr_1X2">1X2</td>
+                        <td class="td_hdr_HDR">HDP</td>
+                        <td class="td_hdr_OU">OU</td>
+                        <td class="td_hdr_1X2">1X2</td>
+                        <td class="td_hdr_HDR">HDP</td>
+                        <td class="td_hdr_OU">OU</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="leaugegroup" id="lid_-1836659252">
+                <div class="leaguegroup_heder clearfix">
+                    <div class="favoff"></div>
+                    <div class="leagues_header_name">2017 Africa Cup of Nations U20</div>
+                    <div class="leagues_header_markettype">Running</div>
+                </div>
+                <table class="gametable" id="id_444045817">
+                    <tbody>
+                        <tr>
+                            <td class="gametable_td_time">
+                                <input type="hidden" class="marker">
+                                <input type="hidden" class="league" value="2017 Africa Cup of Nations U20">
+                                <input type="hidden" class="position" value="0">
+                                <input type="hidden" class="hidKickofTime" value="3/24/2017 11:50:00 AM">
+                                <input type="hidden" class="hidFavoured" value="0">
+                                <span class="ScoreOrStartTime">0 : 1</span><br>
+                                <span class="MatchTime">1H 40'</span><br>
+                                <div class="MatchFavoff"></div>
+                            </td>
+                            <td class="gametable_td_event">
+                                <span class="Home">Guinea U20</span>
+                                <span class="spanRedCardsHome"></span><br>
+                                <span class="Home">Egypt U20</span>
+                                <span class="spanRedCardsAway"></span><br>
+                                <span class="Draw">Draw</span>
+                            </td>
+                            <td class="gametable_td_ft_1x2">
+                                <span class="FTHomeOdd">9.50</span>
+                                <span class="FTAwayOdd highlight_gree">1.53</span>
+                                <span class="FTDrawOdd">3.70</span>
+                            </td>
+                            <td class="gametable_td_ft_hdp_1">
+                                <span class="FTHDPHome">0.0</span><br>
+                                <span class="FTHDPAway"></span><br>
+                            </td>
+                            <td class="gametable_td_ft_hdp_2">
+                                <span class="FTHDPHomeOdd">1.750</span><br>
+                                <span class="FTHDPAwayOdd">2.210</span><br>
+                            </td>
+                            <td class="gametable_td_ft_ou_1">
+                                <span class="FTGoal">3.5</span><br>
+                            </td>
+                            <td class="gametable_td_ft_ou_2">
+                                <span class="FTOverText">o</span><br>
+                                <span class="FTUnderText">u</span><br>
+                            </td>
+                            <td class="gametable_td_ft_ou_3">
+                                <span class="FTOver">1.660</span><br>
+                                <span class="FTUnder rise">2.440</span><br>
+                            </td>
+                            <td class="gametable_td_ht_1x2">
+                                <span class="HTHomeOdd">73.00</span><br>
+                                <span class="HTAwayOdd highlight_green">1.10</span><br>
+                                <span class="HTDrawOdd">10.00</span><br>
+                            </td>
+                            <td class="gametable_td_ht_hdp_1">
+                                <span class="HTHDPHome">0.0</span><br>
+                                <span class="HTHDPAway"></span><br>
+                            </td>
+                            <td class="gametable_td_ht_hdp_2">
+                                <span class="HTHDPHomeOdd">1.770</span><br>
+                                <span class="HTHDPAwayOdd">2.210</span><br>
+                            </td>
+                            <td class="gametable_td_ht_ou_1">
+                                <span class="HTGoal">1.5</span><br>
+                            </td>
+                            <td class="gametable_td_ht_ou_2">
+                                <span class="HTOverText">o</span><br>
+                                <span class="HTUnderText">u</span><br>
+                            </td>
+                            <td class="gametable_td_ht_ou_3">
+                                <span class="HTOver">4.570</span><br>
+                                <span class="HTUnder highlight_green">1.170</span><br>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="gametable" id="id_458845817">
+                    <tbody>
+                        <tr>
+                            <td class="gametable_td_time">
+                                <input type="hidden" class="marker">
+                                <input type="hidden" class="league" value="2017 Africa Cup of Nations U20">
+                                <input type="hidden" class="position" value="0">
+                                <input type="hidden" class="hidKickofTime" value="3/24/2017 11:50:00 AM">
+                                <input type="hidden" class="hidFavoured" value="0">
+                                <span class="ScoreOrStartTime samehidegroup">0 : 1</span><br>
+                                <span class="MatchTime samehidegroup">1H 40'</span><br>
+                                <div class="MatchFavoff samehidegroup"></div>
+                            </td>
+                            <td class="gametable_td_event">
+                                <span class="Home samehidegroup">Guinea U20</span>
+                                <span class="spanRedCardsHome samehidegroup"></span><br>
+                                <span class="Home samehidegroup">Egypt U20</span>
+                                <span class="spanRedCardsAway samehidegroup"></span><br>
+                                <span class="Draw samehidegroup">Draw</span>
+                            </td>
+                            <td class="gametable_td_ft_1x2">
+                                <span class="FTHomeOdd"></span>
+                                <span class="FTAwayOdd"></span>
+                                <span class="FTDrawOdd"></span>
+                            </td>
+                            <td class="gametable_td_ft_hdp_1">
+                                <span class="FTHDPHome">0-0.5</span><br>
+                                <span class="FTHDPAway"></span><br>
+                            </td>
+                            <td class="gametable_td_ft_hdp_2">
+                                <span class="FTHDPHomeOdd">2.250</span><br>
+                                <span class="FTHDPAwayOdd">1.760</span><br>
+                            </td>
+                            <td class="gametable_td_ft_ou_1">
+                                <span class="FTGoal">2-2.5</span><br>
+                            </td>
+                            <td class="gametable_td_ft_ou_2">
+                                <span class="FTOverText">o</span><br>
+                                <span class="FTUnderText">u</span><br>
+                            </td>
+                            <td class="gametable_td_ft_ou_3">
+                                <span class="FTOver">2.110</span><br>
+                                <span class="FTUnder rise">1.883</span><br>
+                            </td>
+                            <td class="gametable_td_ht_1x2">
+                                <span class="HTHomeOdd"></span><br>
+                                <span class="HTAwayOdd"></span><br>
+                                <span class="HTDrawOdd"></span><br>
+                            </td>
+                            <td class="gametable_td_ht_hdp_1">
+                                <span class="HTHDPHome">0-0.5</span><br>
+                                <span class="HTHDPAway"></span><br>
+                            </td>
+                            <td class="gametable_td_ht_hdp_2">
+                                <span class="HTHDPHomeOdd">5.760</span><br>
+                                <span class="HTHDPAwayOdd">1.200</span><br>
+                            </td>
+                            <td class="gametable_td_ht_ou_1">
+                                <span class="HTGoal">1.5-2</span><br>
+                            </td>
+                            <td class="gametable_td_ht_ou_2">
+                                <span class="HTOverText">o</span><br>
+                                <span class="HTUnderText">u</span><br>
+                            </td>
+                            <td class="gametable_td_ht_ou_3">
+                                <span class="HTOver">5.160</span><br>
+                                <span class="HTUnder highlight_green">1.040</span><br>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="leaugegroup" id="lid_-2589659252">
+                <div class="leaguegroup_heder clearfix">
+                    <div class="favoff"></div>
+                    <div class="leagues_header_name">2017 Africa Cup of Nations U20 - No. of Corners</div>
+                    <div class="leagues_header_markettype">Running</div>
+                </div>
+                <table class="gametable" id="id_625794817">
+                    <tbody>
+                        <tr>
+                            <td class="gametable_td_time">
+                                <input type="hidden" class="marker">
+                                <input type="hidden" class="league" value="2017 Africa Cup of Nations U20 - No. of Corners">
+                                <input type="hidden" class="position" value="0">
+                                <input type="hidden" class="hidKickofTime" value="3/24/2017 11:50:00 AM">
+                                <input type="hidden" class="hidFavoured" value="0">
+                                <span class="ScoreOrStartTime">3 : 1</span><br>
+                                <span class="MatchTime">1H 40'</span><br>
+                                <div class="MatchFavoff"></div>
+                            </td>
+                            <td class="gametable_td_event">
+                                <span class="Home">Guinea U20 - No. of Corners</span>
+                                <span class="spanRedCardsHome"></span><br>
+                                <span class="Home">Egypt U20 - No. of Corners</span>
+                                <span class="spanRedCardsAway"></span><br>
+                                <span class="Draw">Draw</span>
+                            </td>
+                            <td class="gametable_td_ft_1x2">
+                                <span class="FTHomeOdd"></span>
+                                <span class="FTAwayOdd"></span>
+                                <span class="FTDrawOdd"></span>
+                            </td>
+                            <td class="gametable_td_ft_hdp_1">
+                                <span class="FTHDPHome"></span><br>
+                                <span class="FTHDPAway"></span><br>
+                            </td>
+                            <td class="gametable_td_ft_hdp_2">
+                                <span class="FTHDPHomeOdd"></span><br>
+                                <span class="FTHDPAwayOdd"></span><br>
+                            </td>
+                            <td class="gametable_td_ft_ou_1">
+                                <span class="FTGoal">9.0</span><br>
+                            </td>
+                            <td class="gametable_td_ft_ou_2">
+                                <span class="FTOverText">o</span><br>
+                                <span class="FTUnderText">u</span><br>
+                            </td>
+                            <td class="gametable_td_ft_ou_3">
+                                <span class="FTOver">2.110</span><br>
+                                <span class="FTUnder rise">1.720</span><br>
+                            </td>
+                            <td class="gametable_td_ht_1x2">
+                                <span class="HTHomeOdd"></span><br>
+                                <span class="HTAwayOdd"></span><br>
+                                <span class="HTDrawOdd"></span><br>
+                            </td>
+                            <td class="gametable_td_ht_hdp_1">
+                                <span class="HTHDPHome"></span><br>
+                                <span class="HTHDPAway"></span><br>
+                            </td>
+                            <td class="gametable_td_ht_hdp_2">
+                                <span class="HTHDPHomeOdd"></span><br>
+                                <span class="HTHDPAwayOdd"></span><br>
+                            </td>
+                            <td class="gametable_td_ht_ou_1">
+                                <span class="HTGoal">4.5</span><br>
+                            </td>
+                            <td class="gametable_td_ht_ou_2">
+                                <span class="HTOverText">o</span><br>
+                                <span class="HTUnderText">u</span><br>
+                            </td>
+                            <td class="gametable_td_ht_ou_3">
+                                <span class="HTOver">2.250</span><br>
+                                <span class="HTUnder">1.620</span><br>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
