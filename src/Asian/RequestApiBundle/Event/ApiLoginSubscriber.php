@@ -8,6 +8,7 @@
 
 namespace Asian\RequestApiBundle\Event;
 
+use Asian\RequestApiBundle\Model\ApiWeb;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Asian\UserBundle\Helper\Data;
@@ -45,14 +46,9 @@ class ApiLoginSubscriber implements EventSubscriberInterface
 			'username' => $apiUser->getUsername(),
 		];
 
-		$response = Unirest\Request::get($helper->getApiRegisterUrl(), $sendHeaders, $query);
-
-		if ($response->code != 200) {
-			throw new Exception();
-		}
-
-		if ($response->body->Code == -1) {
-			throw new Exception();
+		$response = ApiWeb::sendGetRequest($helper->getApiRegisterUrl(), $sendHeaders, $query);
+		if ($response->Code < 0) {
+			throw new Exception($response->Result->TextMessage);
 		}
 
 	}
