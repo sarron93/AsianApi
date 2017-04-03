@@ -1,164 +1,170 @@
-{% extends '::base.html.twig' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
-{% endblock %}
-
-{% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-3 side-bar">
-            <div class="account">
-                <div class="account_header">
-                    <span>Account Summary</span>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 side-bar">
+                <div class="account">
+                    <div class="account_header">
+                        <span>Account Summary</span>
+                    </div>
+                    <table id="tableAccountSummaryItem" class="tableAccountSummaryItem">
+                        <tbody>
+                            <tr class="trAccountSummaryCredit">
+                                <td class="tdAccountSummaryName">
+                                    <span>Credit</span>
+                                </td>
+                                <td class="tdAccountSummaryValue">
+                                    <span id="spanAcsum_credit" class="spanAcsum_credit">324.85 EUR</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table id="tableAccountSummary" class="tableAccountSummary">
+                        <tbody>
+                            <tr>
+                                <td class="tdAccountSummaryName">
+                                    <span>Yesterday P&L</span>
+                                </td>
+                                <td class="tdAccountSummaryValue">
+                                    <span id="spanAcsum_yesterday">0.0 EUR</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tdAccountSummaryName">
+                                    <span>Today P&L</span>
+                                </td>
+                                <td class="tdAccountSummaryValue">
+                                    <span id="spanAcsum_today">0.0 EUR</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tdAccountSummaryName">
+                                    <span>Outstanding</span>
+                                </td>
+                                <td class="tdAccountSummaryValue">
+                                    <span id="spanAcsum_outstanding">0.0 EUR</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tdAccountSummaryName">
+                                    <span>Open Bets</span>
+                                </td>
+                                <td class="tdAccountSummaryValue">
+                                    <span id="spanAcsum_openbets">0</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <table id="tableAccountSummaryItem" class="tableAccountSummaryItem">
+                <div class="pending">
+                    <div class="pending_header clearfix">
+                        <div class="pending_bets">Pending Bets</div>
+                        <div class="my_bets">My Bets</div>
+                    </div>
+                </div>
+                <table class="tablePending">
                     <tbody>
-                        <tr class="trAccountSummaryCredit">
-                            <td class="tdAccountSummaryName">
-                                <span>Credit</span>
+                        <tr>
+                            <td class="tdPendingBets">
+                                <span>no pending bets</span>
                             </td>
-                            <td class="tdAccountSummaryValue">
-                                <span id="spanAcsum_credit" class="spanAcsum_credit">324.85 EUR</span>
+                            <td class="tdPendingBets">
+                                <span></span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <table id="tableAccountSummary" class="tableAccountSummary">
-                    <tbody>
-                        <tr>
-                            <td class="tdAccountSummaryName">
-                                <span>Yesterday P&L</span>
-                            </td>
-                            <td class="tdAccountSummaryValue">
-                                <span id="spanAcsum_yesterday">0.0 EUR</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tdAccountSummaryName">
-                                <span>Today P&L</span>
-                            </td>
-                            <td class="tdAccountSummaryValue">
-                                <span id="spanAcsum_today">0.0 EUR</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tdAccountSummaryName">
-                                <span>Outstanding</span>
-                            </td>
-                            <td class="tdAccountSummaryValue">
-                                <span id="spanAcsum_outstanding">0.0 EUR</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tdAccountSummaryName">
-                                <span>Open Bets</span>
-                            </td>
-                            <td class="tdAccountSummaryValue">
-                                <span id="spanAcsum_openbets">0</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="pending">
-                <div class="pending_header clearfix">
-                    <div class="pending_bets">Pending Bets</div>
-                    <div class="my_bets">My Bets</div>
-                </div>
-            </div>
-            <table class="tablePending">
-                <tbody>
-                    <tr>
-                        <td class="tdPendingBets">
-                            <span>no pending bets</span>
-                        </td>
-                        <td class="tdPendingBets">
-                            <span></span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="leagues">
-                <div class="leagues_header">
-                    <span>Leagues / Competitions</span>
-                </div>
-                <ul class="tree_leagues">
-                    <li class="tree_leagues_main_item favorites">
-                        <div class="tree_leagues_main_item_text">
-                            <img class="tree_icon" src="img/fav_main.png" alt="">Favorites
-                        </div>
-                    </li>
-                    <li class="tree_leagues_main_item">
-                        <div class="tree_leagues_main_item_text">
-                            <img class="tree_icon" src="img/footballIcon2.png" alt="">Football
-                        </div>
-                        <ul class="tree_leagues_first_node">
-                            <li class="tree_leagues_subitem unrolled">
-                                <div class="tree_leagues_main_item_text">
-                                    In Running (<span id="football_in_running">20</span>)
-                                </div>
-                                <ul class="tree_leagues_second_node unrolled">
-                                    <li class="tree_leagues_item">2017 Africa Cup of Nations U20</li>
-                                    <li class="tree_leagues_item">2017 Africa Cup of Nations U20 - No. of Corners</li>
-                                    <li class="tree_leagues_item">AFC Champions League</li>
-                                    <li class="tree_leagues_item">AFC Champions League - No. of Corners</li>
-                                    <li class="tree_leagues_item">Bulgaria First Professional Football League</li>
-                                    <li class="tree_leagues_item">Cyprus Womens Cup</li>
-                                    <li class="tree_leagues_item">Czech Republic Cup</li>
-                                    <li class="tree_leagues_item">English Central Reserve League</li>
-                                    <li class="tree_leagues_item">Four Nations Tournament Women (in Tourkey)</li>
-                                    <li class="tree_leagues_item">Hong Kong Reserve League</li>
-                                    <li class="tree_leagues_item">Hungaru Cap</li>
-                                    <li class="tree_leagues_item">Italy Lega Pro Cup</li>
-                                    <li class="tree_leagues_item">Italy Primavera Campionato U19</li>
-                                    <li class="tree_leagues_item">Italy Serie D Cup</li>
-                                    <li class="tree_leagues_item">Malaysia Super League</li>
-                                    <li class="tree_leagues_item">Moldova National Division</li>
-                                    <li class="tree_leagues_item">Oman Professional League</li>
-                                    <li class="tree_leagues_item">Russia Cup</li>
-                                    <li class="tree_leagues_item">Russia Cup - No. of Corners</li>
-                                    <li class="tree_leagues_item">Turkey League</li>
-                                </ul>
-                            </li>
-                            <li class="tree_leagues_subitem">
-                                <div class="tree_leagues_main_item_text">
-                                    Today (<span id="football_today">212</span>)
-                                </div>
-                            </li>
-                            <li class="tree_leagues_subitem">
-                                <div class="tree_leagues_main_item_text">
-                                    Early (<span id="football_early">551</span>)
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="tree_leagues_main_item">
-                        <div class="tree_leagues_main_item_text">
-                            <img class="tree_icon" src="img/basketball_icon.png" alt="">Basketball
-                        </div>
-                        <ul class="tree_leagues_first_node">
-                            <li class="tree_leagues_subitem rolled">
-                                <div class="tree_leagues_main_item_text">
-                                    In Running (<span id="basketball_in_running">1</span>)
-                                </div>
-                                <ul class="tree_leagues_second_node rolled">
-                                    <li class="tree_leagues_item">NBA 2017</li>
-                                </ul>
-                            </li>
-                            <li class="tree_leagues_subitem">
-                                <div class="tree_leagues_main_item_text">
-                                    Today (<span id="basketball_today">189</span>)
-                                </div>
-                            </li>
-                            <li class="tree_leagues_subitem">
-                                <div class="tree_leagues_main_item_text">
-                                    Early (<span id="basketball_early">10</span>)
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                <div class="leagues">
+                    <div class="leagues_header">
+                        <span>Leagues / Competitions</span>
+                    </div>
+                    <ul class="tree_leagues">
+                        <li class="tree_leagues_main_item favorites">
+                            <div class="tree_leagues_main_item_text">
+                                <img class="tree_icon" src="img/fav_main.png" alt="">Favorites
+                            </div>
+                        </li>
+                        <li class="tree_leagues_main_item">
+                            <div class="tree_leagues_main_item_text">
+                                <img class="tree_icon" src="img/footballIcon2.png" alt="">Football
+                            </div>
+                            <ul class="tree_leagues_first_node">
+                                <li class="tree_leagues_subitem unrolled">
+                                    <div class="tree_leagues_main_item_text">
+                                        In Running (<span id="football_in_running">20</span>)
+                                    </div>
+                                    <ul class="tree_leagues_second_node unrolled">
+                                        <li class="tree_leagues_item">2017 Africa Cup of Nations U20</li>
+                                        <li class="tree_leagues_item">2017 Africa Cup of Nations U20 - No. of Corners</li>
+                                        <li class="tree_leagues_item">AFC Champions League</li>
+                                        <li class="tree_leagues_item">AFC Champions League - No. of Corners</li>
+                                        <li class="tree_leagues_item">Bulgaria First Professional Football League</li>
+                                        <li class="tree_leagues_item">Cyprus Womens Cup</li>
+                                        <li class="tree_leagues_item">Czech Republic Cup</li>
+                                        <li class="tree_leagues_item">English Central Reserve League</li>
+                                        <li class="tree_leagues_item">Four Nations Tournament Women (in Tourkey)</li>
+                                        <li class="tree_leagues_item">Hong Kong Reserve League</li>
+                                        <li class="tree_leagues_item">Hungaru Cap</li>
+                                        <li class="tree_leagues_item">Italy Lega Pro Cup</li>
+                                        <li class="tree_leagues_item">Italy Primavera Campionato U19</li>
+                                        <li class="tree_leagues_item">Italy Serie D Cup</li>
+                                        <li class="tree_leagues_item">Malaysia Super League</li>
+                                        <li class="tree_leagues_item">Moldova National Division</li>
+                                        <li class="tree_leagues_item">Oman Professional League</li>
+                                        <li class="tree_leagues_item">Russia Cup</li>
+                                        <li class="tree_leagues_item">Russia Cup - No. of Corners</li>
+                                        <li class="tree_leagues_item">Turkey League</li>
+                                    </ul>
+                                </li>
+                                <li class="tree_leagues_subitem">
+                                    <div class="tree_leagues_main_item_text">
+                                        Today (<span id="football_today">212</span>)
+                                    </div>
+                                </li>
+                                <li class="tree_leagues_subitem">
+                                    <div class="tree_leagues_main_item_text">
+                                        Early (<span id="football_early">551</span>)
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="tree_leagues_main_item">
+                            <div class="tree_leagues_main_item_text">
+                                <img class="tree_icon" src="img/basketball_icon.png" alt="">Basketball
+                            </div>
+                            <ul class="tree_leagues_first_node">
+                                <li class="tree_leagues_subitem rolled">
+                                    <div class="tree_leagues_main_item_text">
+                                        In Running (<span id="basketball_in_running">1</span>)
+                                    </div>
+                                    <ul class="tree_leagues_second_node rolled">
+                                        <li class="tree_leagues_item">NBA 2017</li>
+                                    </ul>
+                                </li>
+                                <li class="tree_leagues_subitem">
+                                    <div class="tree_leagues_main_item_text">
+                                        Today (<span id="basketball_today">189</span>)
+                                    </div>
+                                </li>
+                                <li class="tree_leagues_subitem">
+                                    <div class="tree_leagues_main_item_text">
+                                        Early (<span id="basketball_early">10</span>)
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
             </div>
         </div>
         <div class="col-lg-9 main-content">
@@ -409,5 +415,10 @@
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</body>
+</html>
