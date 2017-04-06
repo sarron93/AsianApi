@@ -131,7 +131,7 @@ class BettingController extends Controller
 		];
 		$body = Unirest\Request\Body::Json($data);
 
-		$response = ApiWeb::sendPostRequest($request, $headers, $body);
+		$response = ApiWeb::sendPostRequest($url, $headers, $body);
 
 		if ($response->Code < 0) {
 			return $this->json($response);

@@ -55,4 +55,9 @@ class Data
 	{
 		return self::API_URL."AsianOddsService/PlaceBet";
 	}
+
+	public function getAccountSummary()
+	{
+		return self::API_URL."/AsianOddsService/GetAccountSummary";
+	}
 }
