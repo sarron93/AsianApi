@@ -34,64 +34,69 @@
                                         <div class="form-group">
                                             <input type="hidden" id="affiliate" name="affiliate" class="form-control" value="">
                                         </div>
-                                        <div class="form-group">
-                                            <label class="required form-control-label" for="email">EMAIL ADDRESS *</label>
+                                        <div class="form-group required">
+                                            <label class="form-control-label" for="email">EMAIL ADDRESS *</label>
                                             <input type="text" id="email" name="email" placeholder="example@email.com" class="form-control form-control-warning" value="" autocomplete="off" maxlength="50">
                                             <input type="hidden" id="emailvalidator" value="">
                                             <div class="validation-message" id="email-validation-message">
                                                 <div id="emailvalidation" class="validation-content">
-                                                    <small class="form-control-feedback hidden"><i>Provide your email address!</i></small>
-                                                    <small class="form-control-feedback text-success hidden"><i>Email Address</i> <i class="fa fa-check"></i></small>
+                                                    <small class="form-control-feedback"></small>
+                                                    <!-- <small class="form-control-feedback hidden"><i>Provide your email address!</i></small>
+                                                    <small class="form-control-feedback text-success hidden"><i>Email Address</i> <i class="fa fa-check"></i></small> -->
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="required form-control-lable" for="username">USERNAME *</label>
+                                        <div class="form-group required">
+                                            <label class="form-control-label" for="username">USERNAME *</label>
                                             <input type="text" id="username" name="username" placeholder="Username" class="form-control form-control-warning" value="" autocomplete="off" maxlength="20">
                                             <input type="hidden" id="unamevalidator" value="">
                                             <div class="validation-message" id="username-validation-message">
                                                 <div id="usernamevalidation" class="validation-content">
-                                                    <small class="form-control-feedback hidden"><i>Please provide your username!</i></small>
-                                                    <small class="form-control-feedback text-success hidden"><i>User Name</i> <i class="fa fa-check"></i></small>
+                                                    <small class="form-control-feedback"></small>
+                                                    <!-- <small class="form-control-feedback hidden"><i>Please provide your username!</i></small>
+                                                    <small class="form-control-feedback text-success hidden"><i>User Name</i> <i class="fa fa-check"></i></small> -->
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
-                                                <div class="col-lg-6 fname">
-                                                    <label class="required form-control-lable" for="fname">FIRSTNAME *</label>
+                                                <div class="col-lg-6 fname required">
+                                                    <label class="form-control-label" for="fname">FIRSTNAME *</label>
                                                     <input type="text" id="fname" name="fname" placeholder="First Name" class="form-control form-control-warning" value="" autocomplete="off" maxlength="20" attribute="First Name">
                                                     <div id="fname-validation-message" class="validation-message">
                                                         <div id="fnamevalidation" class="validation-content">
-                                                            <small class="form-control-feedback hidden"><i>Enter your First Name!</i></small>
-                                                            <small class="form-control-feedback text-success hidden"><i>First Name</i> <i class="fa fa-check"></i></small>
+                                                            <small class="form-control-feedback"></small>
+                                                            <!-- <small class="form-control-feedback hidden"><i>Enter your First Name!</i></small>
+                                                            <small class="form-control-feedback text-success hidden"><i>First Name</i> <i class="fa fa-check"></i></small> -->
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6 lname">
-                                                    <label class="required form-control-lable" for="lname">LASTNAME *</label><br>
+                                                <div class="col-lg-6 lname required">
+                                                    <label class="form-control-label" for="lname">LASTNAME *</label><br>
                                                     <input type="text" id="lname" name="lname" placeholder="Last Name" class="form-control form-control-warning" value="" autocomplete="off" maxlength="20" attribute="Last Name">
                                                     <div id="lname-validation-message" class="validation-message">
                                                         <div id="lnamevalidation" class="validation-content">
-                                                            <small class="form-control-feedback hidden"><i>Enter your Last Name!</i></small>
-                                                            <small class="form-control-feedback text-success hidden"><i>Last Name</i> <i class="fa fa-check"></i></small>
+                                                            <small class="form-control-feedback"></small>
+                                                            <!-- <small class="form-control-feedback hidden"><i>Enter your Last Name!</i></small>
+                                                            <small class="form-control-feedback text-success hidden"><i>Last Name</i> <i class="fa fa-check"></i></small> -->
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="required form-control-lable" for="bday">BIRTHDAY *</label>
-                                            <input type="date" id="bday" name="bday" max="1998-12-31" class="form-control" placeholder="mm/dd/yyyy" value="">
+                                        <div class="form-group required">
+                                            <label class="form-control-label" for="bday">BIRTHDAY *</label>
+                                            <input type="date" id="bday" name="bday" max="1998-12-31" min="1930-12-31" class="form-control" placeholder="mm/dd/yyyy" value="">
                                             <div id="bday-validation-message" class="validation-message">
                                                 <div id="bdayvalidation" class="validation-content">
-                                                    <small class="form-control-feedback hidden"><i>Provide your Birthday!</i></small>
-                                                    <small class="form-control-feedback text-success hidden"><i>Birthday</i> <i class="fa fa-check"></i></small>
+                                                    <small class="form-control-feedback"></small>
+                                                    <!-- <small class="form-control-feedback hidden"><i>Provide your Birthday!</i></small>
+                                                    <small class="form-control-feedback text-success hidden"><i>Birthday</i> <i class="fa fa-check"></i></small> -->
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="required form-control-lable" for="country">COUNTRY *</label><br>
+                                        <div class="required form-group">
+                                            <label class="form-control-label" for="country">COUNTRY *</label><br>
                                             <select class="form-control" id="country" name="country">
                                                 <option value="">Select Country</option>
             							        <option value="Albania">Albania</option>
@@ -221,20 +226,22 @@
                                             </select>
                                             <div id="country-validation-message" class="validation-message">
                                                 <div id="countryvalidation" class="validation-content">
-                                                    <small class="form-control-feedback hidden"><i>Select your country!</i></small>
-                                                    <small class="form-control-feedback text-success hidden"><i>Country</i> <i class="fa fa-check"></i></small>
+                                                    <small class="form-control-feedback"></small>
+                                                    <!-- <small class="form-control-feedback hidden"><i>Select your country!</i></small>
+                                                    <small class="form-control-feedback text-success hidden"><i>Country</i> <i class="fa fa-check"></i></small> -->
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
-                                                <div class="col-lg-6 contactno">
-                                                    <label class="required form-control-lable" for="contactno">CONTACT NUMBER *</label>
+                                                <div class="col-lg-6 contactno required">
+                                                    <label class="form-control-label" for="contactno">CONTACT NUMBER *</label>
                                                     <input type="tel" name="contactno" placeholder="Contact No." id="contactno" class="form-control form-control-warning" value="" autocomplete="off" maxlength="20">
                                                     <div id="contact-validation-message" class="validation-message">
                                                         <div id="contactvalidation" class="validation-content">
-                                                            <small class="form-control-feedback hidden"><i>Enter any of your Contact No.!</i></small>
-                                                            <small class="form-control-feedback text-success hidden"><i>Contact Number</i> <i class="fa fa-check"></i></small>
+                                                            <small class="form-control-feedback"></small>
+                                                            <!-- <small class="form-control-feedback hidden"><i>Enter any of your Contact No.!</i></small>
+                                                            <small class="form-control-feedback text-success hidden"><i>Contact Number</i> <i class="fa fa-check"></i></small> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -244,8 +251,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="required form-control-lable" for="dcurrency">DEPOSIT CURRENCY *</label>
+                                        <div class="form-group required">
+                                            <label class="form-control-label" for="dcurrency">DEPOSIT CURRENCY *</label>
                                             <select class="form-control" name="dcurrency" id="dcurrency">
                                                 <option value="">Select one</option>
                                                 <option value="EUR">Euro</option>
@@ -254,13 +261,14 @@
                                             </select>
                                             <div id="currency-validation-message" class="validation-message">
                                                 <div id="currencyvalidation" class="validation-content">
-                                                    <small class="form-control-feedback hidden"><i>Select deposit currency!</i></small>
-                                                    <small class="form-control-feedback text-success hidden"><i>Deposit Currency</i> <i class="fa fa-check"></i></small>
+                                                    <small class="form-control-feedback"></small>
+                                                    <!-- <small class="form-control-feedback hidden"><i>Select deposit currency!</i></small>
+                                                    <small class="form-control-feedback text-success hidden"><i>Deposit Currency</i> <i class="fa fa-check"></i></small> -->
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="required form-control-lable" for="dmethod">DEPOSIT METHOD *</label>
+                                        <div class="form-group required">
+                                            <label class="form-control-label" for="dmethod">DEPOSIT METHOD *</label>
                                             <select class="form-control" name="dmethod" id="dmethod">
                                                 <option value="">Select one</option>
                                                 <option value="0">BankWire</option>
@@ -270,8 +278,9 @@
                                             </select>
                                             <div id="method-validation-message" class="validation-message">
                                                 <div id="methodvalidation" class="validation-content">
-                                                    <small class="form-control-feedback hidden"><i>Select deposit method!</i></small>
-                                                    <small class="form-control-feedback text-success hidden"><i>Deposit Method</i> <i class="fa fa-check"></i></small>
+                                                    <small class="form-control-feedback"></small>
+                                                    <!-- <small class="form-control-feedback hidden"><i>Select deposit method!</i></small>
+                                                    <small class="form-control-feedback text-success hidden"><i>Deposit Method</i> <i class="fa fa-check"></i></small> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -314,7 +323,6 @@
             </div>
         </div>
     </div>
-
 </footer>
 
 
@@ -324,4 +332,8 @@
         <input type="submit" value="{{ 'registration.submit'|trans }}" />
     </div>
     {{ form_end(form) }} -->
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/register.js') }}"></script>
 {% endblock %}
