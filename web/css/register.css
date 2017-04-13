@@ -1,0 +1,105 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+body{
+    background-color: #000;
+    font-size: 14px;
+    line-height: 1.42857143;
+}
+audio, canvas, img, video{
+    vertical-align: middle;
+}
+input{
+    color: #222;
+}
+input::-webkit-input-placeholder {
+    color: #aaa !important;
+}
+input:-moz-placeholder { /* Firefox 18- */
+    color: #aaa !important;
+}
+input::-moz-placeholder {  /* Firefox 19+ */
+    color: #aaa !important;
+}
+input:-ms-input-placeholder {
+    color: #aaa !important;
+}
+.row-margin-no{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.hidden{
+    /*visibility: hidden;*/
+    display: none;
+}
+.registration-page{
+    background: #000 url(../img/register22.jpg) 0 70% no-repeat;
+    min-height: 200px;
+    background-size: 100%;
+}
+.reg-con{
+    padding: 2% 5% 2% 5%;
+}
+.text-left{
+    text-align: left;
+}
+.reg-text{
+    padding: 0 40px 0 0;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+}
+.reg-text p{
+    font-size: 24px;
+    font-weight: normal;
+    margin-top: 25px;
+    line-height: 40px;
+}
+.reg-text h4{
+    font-size: 40px;
+    font-weight: 700;
+    padding: 20% 0 40px 0;
+    text-shadow: 2px 2px 3px #000;
+}
+.timetogo{
+    padding: 10px 20px 10px 0px;
+    background: rgba(0, 0, 0, 0.3);
+}
+.reg-form{
+    padding: 0 0 0 12%;
+    overflow: hidden;
+}
+.reg-overlay{
+    position: absolute;
+    width: 100%;
+    background: rgba(51, 51, 51, 0.2);
+    text-align: left;
+    z-index: 99;
+    padding: 80% 0;
+}
+.reg-overlay img{
+    margin-left: 35%;
+    width: 25px;
+}
+.rform{
+    background: #f3f3f3;
+    padding: 40px;
+    border: 4px #d9d9d9 solid;
+    border-radius: 5px;
+    min-height: 830px;
+}
+.rform label{
+    font-weight: normal;
+}
+.footer{
+    background-color: #000;
+    min-height: 100px;
+}
+.copyright{
+    padding: 4% 0 2% 0;
+    color: #fff;
+    font-size: 13px;
+    font-family: 'Open sans', sans-serif;
+}

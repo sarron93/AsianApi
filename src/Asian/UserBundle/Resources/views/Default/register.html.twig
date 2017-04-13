@@ -1,9 +1,339 @@
-{% extends 'base.html.twig' %}
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/register.css') }}">
+{% endblock %}
+
 {% block body %}
-    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+<div class="inner-page" cz-shortcut-listen="true">
+    <div class="wrapper">
+        <div class="registration-page">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 reg-con text-left">
+                        <div class="row row-margin-no">
+                            <div class="col-lg-6 reg-text">
+                                <p>
+                                    <a href="#">
+                                        <img src="{{ asset('img/ao-logo1.png') }}" alt="">
+                                    </a>
+                                </p>
+                                <h4>Time to go Pro</h4>
+                                <div class="timetogo">
+                                    <p>Level-up with the most comprehensive betting tool, Asianodds. You get access to only the best odds, and you get access to full support from our team. All you have to do is fill-up the form on the right to get started.</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 reg-form">
+                                <!-- <div class="reg-overlay" id="reg-overlay">
+                                    <img src="{{ asset('img/loading.gif') }}" id="imgloading" alt="">
+                                </div> -->
+                                <div class="col-lg-12 rform">
+                                    <!-- contact form -->
+                                    <form method="post" id="registration-form">
+                                        <div class="form-group">
+                                            <input type="hidden" id="affiliate" name="affiliate" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group required">
+                                            <label class="form-control-label" for="email">EMAIL ADDRESS *</label>
+                                            <input type="text" id="email" name="email" placeholder="example@email.com" class="form-control form-control-warning" value="" autocomplete="off" maxlength="50">
+                                            <input type="hidden" id="emailvalidator" value="">
+                                            <div class="validation-message" id="email-validation-message">
+                                                <div id="emailvalidation" class="validation-content">
+                                                    <small class="form-control-feedback"></small>
+                                                    <!-- <small class="form-control-feedback hidden"><i>Provide your email address!</i></small>
+                                                    <small class="form-control-feedback text-success hidden"><i>Email Address</i> <i class="fa fa-check"></i></small> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group required">
+                                            <label class="form-control-label" for="username">USERNAME *</label>
+                                            <input type="text" id="username" name="username" placeholder="Username" class="form-control form-control-warning" value="" autocomplete="off" maxlength="20">
+                                            <input type="hidden" id="unamevalidator" value="">
+                                            <div class="validation-message" id="username-validation-message">
+                                                <div id="usernamevalidation" class="validation-content">
+                                                    <small class="form-control-feedback"></small>
+                                                    <!-- <small class="form-control-feedback hidden"><i>Please provide your username!</i></small>
+                                                    <small class="form-control-feedback text-success hidden"><i>User Name</i> <i class="fa fa-check"></i></small> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-6 fname required">
+                                                    <label class="form-control-label" for="fname">FIRSTNAME *</label>
+                                                    <input type="text" id="fname" name="fname" placeholder="First Name" class="form-control form-control-warning" value="" autocomplete="off" maxlength="20" attribute="First Name">
+                                                    <div id="fname-validation-message" class="validation-message">
+                                                        <div id="fnamevalidation" class="validation-content">
+                                                            <small class="form-control-feedback"></small>
+                                                            <!-- <small class="form-control-feedback hidden"><i>Enter your First Name!</i></small>
+                                                            <small class="form-control-feedback text-success hidden"><i>First Name</i> <i class="fa fa-check"></i></small> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 lname required">
+                                                    <label class="form-control-label" for="lname">LASTNAME *</label><br>
+                                                    <input type="text" id="lname" name="lname" placeholder="Last Name" class="form-control form-control-warning" value="" autocomplete="off" maxlength="20" attribute="Last Name">
+                                                    <div id="lname-validation-message" class="validation-message">
+                                                        <div id="lnamevalidation" class="validation-content">
+                                                            <small class="form-control-feedback"></small>
+                                                            <!-- <small class="form-control-feedback hidden"><i>Enter your Last Name!</i></small>
+                                                            <small class="form-control-feedback text-success hidden"><i>Last Name</i> <i class="fa fa-check"></i></small> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group required">
+                                            <label class="form-control-label" for="bday">BIRTHDAY *</label>
+                                            <input type="date" id="bday" name="bday" max="1998-12-31" min="1930-12-31" class="form-control" placeholder="mm/dd/yyyy" value="">
+                                            <div id="bday-validation-message" class="validation-message">
+                                                <div id="bdayvalidation" class="validation-content">
+                                                    <small class="form-control-feedback"></small>
+                                                    <!-- <small class="form-control-feedback hidden"><i>Provide your Birthday!</i></small>
+                                                    <small class="form-control-feedback text-success hidden"><i>Birthday</i> <i class="fa fa-check"></i></small> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="required form-group">
+                                            <label class="form-control-label" for="country">COUNTRY *</label><br>
+                                            <select class="form-control" id="country" name="country">
+                                                <option value="">Select Country</option>
+            							        <option value="Albania">Albania</option>
+                                                <option value="Algeria">Algeria</option>
+                                                <option value="Andorra">Andorra</option>
+                                                <option value="Angola">Angola</option>
+                                                <option value="Argentina">Argentina</option>
+                                                <option value="Armenia">Armenia</option>
+                                                <option value="Australia">Australia</option>
+                                                <option value="Austria">Austria</option>
+                                                <option value="Azerbaijan">Azerbaijan</option>
+                                                <option value="Belarus">Belarus</option>
+                                                <option value="Belgium">Belgium</option>
+                                                <option value="Brazil">Brazil</option>
+                                                <option value="Bulgaria">Bulgaria</option>
+                                                <option value="Cambodia">Cambodia</option>
+                                                <option value="Canada">Canada</option>
+                                                <option value="Chad">Chad</option>
+                                                <option value="Chile">Chile</option>
+                                                <option value="China">China</option>
+                                                <option value="Colombia">Colombia</option>
+                                                <option value="Costa Rica">Costa Rica</option>
+                                                <option value="Croatia">Croatia</option>
+                                                <option value="Cuba">Cuba</option>
+                                                <option value="Cyprus">Cyprus</option>
+                                                <option value="Czech Republic">Czech Republic</option>
+                                                <option value="Denmark">Denmark</option>
+                                                <option value="Dominican Republic">Dominican Republic</option>
+                                                <option value="Ecuador">Ecuador</option>
+                                                <option value="Egypt">Egypt</option>
+                                                <option value="England">England</option>
+                                                <option value="Estonia">Estonia</option>
+                                                <option value="Finland">Finland</option>
+                                                <option value="Georgia">Georgia</option>
+                                                <option value="Germany">Germany</option>
+                                                <option value="Ghana">Ghana</option>
+                                                <option value="Gibraltar">Gibraltar</option>
+                                                <option value="Greece">Greece</option>
+                                                <option value="Greenland">Greenland</option>
+                                                <option value="Grenada">Grenada</option>
+                                                <option value="Guadeloupe">Guadeloupe</option>
+                                                <option value="Guam">Guam</option>
+                                                <option value="Guatemala">Guatemala</option>
+                                                <option value="Guinea">Guinea</option>
+                                                <option value="Haiti">Haiti</option>
+                                                <option value="Hong Kong">Hong Kong</option>
+                                                <option value="Hungary">Hungary</option>
+                                                <option value="Iceland">Iceland</option>
+                                                <option value="India">India</option>
+                                                <option value="Iran">Iran</option>
+                                                <option value="Ireland">Ireland</option>
+                                                <option value="Israel">Israel</option>
+                                                <option value="Italy">Italy</option>
+                                                <option value="Jamaica">Jamaica</option>
+                                                <option value="Japan">Japan</option>
+                                                <option value="Jordan">Jordan</option>
+                                                <option value="Kazakhstan">Kazakhstan</option>
+                                                <option value="Kenya">Kenya</option>
+                                                <option value="Kyrgyzstan">Kyrgyzstan</option>
+                                                <option value="Lao Peoples Democratic Republic">Laos</option>
+                                                <option value="Latvia">Latvia</option>
+                                                <option value="Lebanon">Lebanon</option>
+                                                <option value="Liberia">Liberia</option>
+                                                <option value="Liechtenstein">Liechtenstein</option>
+                                                <option value="Lithuania">Lithuania</option>
+                                                <option value="Luxembourg">Luxembourg</option>
+                                                <option value="Macau">Macau</option>
+                                                <option value="Macedonia">Macedonia</option>
+                                                <option value="Malaysia">Malaysia</option>
+                                                <option value="Maldives">Maldives</option>
+                                                <option value="Malta">Malta</option>
+                                                <option value="Martinique">Martinique</option>
+                                                <option value="Mauritius">Mauritius</option>
+                                                <option value="Mexico">Mexico</option>
+                                                <option value="Moldova">Moldova</option>
+                                                <option value="Monaco">Monaco</option>
+                                                <option value="Mongolia">Mongolia</option>
+                                                <option value="Montenegro">Montenegro</option>
+                                                <option value="Montserrat">Montserrat</option>
+                                                <option value="Morocco">Morocco</option>
+                                                <option value="Myanmar">Myanmar</option>
+                                                <option value="Nepal">Nepal</option>
+                                                <option value="Netherlands">Netherlands</option>
+                                                <option value="Netherlands Antilles">Netherlands Antilles</option>
+                                                <option value="New Caledonia">New Caledonia</option>
+                                                <option value="New Zealand">New Zealand</option>
+                                                <option value="Nigeria">Nigeria</option>
+                                                <option value="Norway">Norway</option>
+                                                <option value="Oman">Oman</option>
+                                                <option value="Pakistan">Pakistan</option>
+                                                <option value="Panama">Panama</option>
+                                                <option value="Paraguay">Paraguay</option>
+                                                <option value="Peru">Peru</option>
+                                                <option value="Poland">Poland</option>
+                                                <option value="Portugal">Portugal</option>
+                                                <option value="Puerto Rico">Puerto Rico</option>
+                                                <option value="Qatar">Qatar</option>
+                                                <option value="Romania">Romania</option>
+                                                <option value="Russian Federation">Russian Federation</option>
+                                                <option value="San Marino">San Marino</option>
+                                                <option value="Saudi Arabia">Saudi Arabia</option>
+                                                <option value="Senegal">Senegal</option>
+                                                <option value="Serbia">Serbia</option>
+                                                <option value="Seychelles">Seychelles</option>
+                                                <option value="Slovakia (Slovak Republic)">Slovakia</option>
+                                                <option value="Slovenia">Slovenia</option>
+                                                <option value="Solomon Islands">Solomon Islands</option>
+                                                <option value="South Africa">South Africa</option>
+                                                <option value="Spain">Spain</option>
+                                                <option value="Sri Lanka">Sri Lanka</option>
+                                                <option value="Suriname">Suriname</option>
+                                                <option value="Sweden">Sweden</option>
+                                                <option value="Switzerland">Switzerland</option>
+                                                <option value="Taiwan">Taiwan</option>
+                                                <option value="Tajikistan">Tajikistan</option>
+                                                <option value="Thailand">Thailand</option>
+                                                <option value="Tunisia">Tunisia</option>
+                                                <option value="Turkey">Turkey</option>
+                                                <option value="Turkmenistan">Turkmenistan</option>
+                                                <option value="Tuvalu">Tuvalu</option>
+                                                <option value="Ukraine">Ukraine</option>
+                                                <option value="Uruguay">Uruguay</option>
+                                                <option value="Uzbekistan">Uzbekistan</option>
+                                                <option value="Venezuela">Venezuela</option>
+                                                <option value="Vietnam">Vietnam</option>
+                                                <option value="Yugoslavia">Yugoslavia</option>
+                                            </select>
+                                            <div id="country-validation-message" class="validation-message">
+                                                <div id="countryvalidation" class="validation-content">
+                                                    <small class="form-control-feedback"></small>
+                                                    <!-- <small class="form-control-feedback hidden"><i>Select your country!</i></small>
+                                                    <small class="form-control-feedback text-success hidden"><i>Country</i> <i class="fa fa-check"></i></small> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-6 contactno required">
+                                                    <label class="form-control-label" for="contactno">CONTACT NUMBER *</label>
+                                                    <input type="tel" name="contactno" placeholder="Contact No." id="contactno" class="form-control form-control-warning" value="" autocomplete="off" maxlength="20">
+                                                    <div id="contact-validation-message" class="validation-message">
+                                                        <div id="contactvalidation" class="validation-content">
+                                                            <small class="form-control-feedback"></small>
+                                                            <!-- <small class="form-control-feedback hidden"><i>Enter any of your Contact No.!</i></small>
+                                                            <small class="form-control-feedback text-success hidden"><i>Contact Number</i> <i class="fa fa-check"></i></small> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 skypeid">
+                                                    <label class="optional" for="skypeid">SKYPE ID (optional)</label>
+                                                    <input type="text" name="skypeid" id="skypeid" class="form-control" placeholder="Skype ID" value="" autocomplete="off" maxlength="30">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group required">
+                                            <label class="form-control-label" for="dcurrency">DEPOSIT CURRENCY *</label>
+                                            <select class="form-control" name="dcurrency" id="dcurrency">
+                                                <option value="">Select one</option>
+                                                <option value="EUR">Euro</option>
+                                                <option value="GBP">GBP</option>
+                                                <option value="EUR">Bitcoin (EUR)</option>
+                                            </select>
+                                            <div id="currency-validation-message" class="validation-message">
+                                                <div id="currencyvalidation" class="validation-content">
+                                                    <small class="form-control-feedback"></small>
+                                                    <!-- <small class="form-control-feedback hidden"><i>Select deposit currency!</i></small>
+                                                    <small class="form-control-feedback text-success hidden"><i>Deposit Currency</i> <i class="fa fa-check"></i></small> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group required">
+                                            <label class="form-control-label" for="dmethod">DEPOSIT METHOD *</label>
+                                            <select class="form-control" name="dmethod" id="dmethod">
+                                                <option value="">Select one</option>
+                                                <option value="0">BankWire</option>
+                                                <option value="2">Skrill (Moneybookers)</option>
+                                                <option value="3">Neteller</option>
+                                                <option value="4">Ecopayz</option>
+                                            </select>
+                                            <div id="method-validation-message" class="validation-message">
+                                                <div id="methodvalidation" class="validation-content">
+                                                    <small class="form-control-feedback"></small>
+                                                    <!-- <small class="form-control-feedback hidden"><i>Select deposit method!</i></small>
+                                                    <small class="form-control-feedback text-success hidden"><i>Deposit Method</i> <i class="fa fa-check"></i></small> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="form-group">
+                                            <div class="g-recaptcha" data-sitekey="6LdNBSQTAAAAAGGFjgDdsOwB3WzET3mFczLmPhEQ" id="g-recaptcha-response">
+                                                <div style="width: 304px; height: 78px;">
+                                                    <div>
+                                                        <iframe src="https://www.google.com/recaptcha/api2/anchor?k=6LdNBSQTAAAAAGGFjgDdsOwB3WzET3mFczLmPhEQ&amp;co=aHR0cHM6Ly9hc2lhbm9kZHM4OC5jb206NDQz&amp;hl=ru&amp;v=r20170329125654&amp;size=normal&amp;cb=8e6qk2c5dgci" title="виджет reCAPTCHA" width="304" height="78" frameborder="0" scrolling="no" name="undefined"></iframe>
+                                                    </div>
+                                                    <textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none;  display: none; "></textarea>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="form-group promocode">
+                                            <input type="hidden" name="promocode" value="" maxlength="30">
+                                        </div>
+                                        <div class="form-group ipaddress">
+                                            <input type="hidden" name="ipaddress" value="">
+                                        </div>
+                                        <input type="hidden" name="form_name" id="form_name" aria-hidden="true" value="REGISTRATION_FORM">
+                                        <button type="submit" class="btn btn-danger btn-lg btn-block" value="SIGN ME UP!" id="_btnSubmit">Sign up &amp; get started</button>
+                                        <div class="form-group">
+                                            <div class="alert alert-warning hidden" id="alertmsg"></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="copyright col-lg-12 text-center">
+                <p>Copyright 2017 Asianconnect N.V.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
     {{ form_widget(form) }}
     <div>
         <input type="submit" value="{{ 'registration.submit'|trans }}" />
     </div>
-    {{ form_end(form) }}
+    {{ form_end(form) }} -->
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/register.js') }}"></script>
 {% endblock %}
