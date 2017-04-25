@@ -22,6 +22,7 @@ class AppController extends Controller
 	 */
 	public function indexAction(Request $request = null)
 	{
-		return $this->render('AppBundle:Default:index.html.twig');
+		// return $this->render('AppBundle:Default:index.html.twig');
+		return $this->render('AsianRequestApiBundle:Default:login.html.twig');
 	}
 }
