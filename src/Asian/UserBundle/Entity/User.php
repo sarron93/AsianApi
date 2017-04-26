@@ -43,7 +43,7 @@ class User extends BaseUser
 	 * @ORM\ManyToOne(targetEntity="ApiUser", inversedBy="users")
 	 * @ORM\JoinColumn(name="api_id", referencedColumnName="id")
 	 */
-	private $apiUser;
+	protected $apiUser;
 	/**
 	 * User constructor.
 	 */

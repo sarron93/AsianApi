@@ -18,13 +18,13 @@ class Data
 	 *
 	 * @param User $user
 	 * @param $password
-	 * @param $timestamp
+	 * @param $salt
 	 * @return string
 	 */
-	public function generateToken(User $user, $password,$timestamp)
+	public function generateToken(User $user, $password,$salt)
 	{
-		return sha1($timestamp . $user->getUsername()
-					. $timestamp . $password);
+		return sha1($salt . $user->getUsername()
+					. $salt . $password);
 	}
 
 	public function getApiLoginUrl()

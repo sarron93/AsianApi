@@ -3,7 +3,6 @@
 namespace AppBundle\Command;
 
 use Asian\RequestApiBundle\Model\ApiConsole;
-use Asian\RequestApiBundle\Model\Cache;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputInterface;
@@ -34,7 +33,7 @@ class CreatePullCommand extends ContainerAwareCommand
 		$this->_em = $this->getContainer()->get('doctrine.orm.entity_manager');
 		$this->_kernel = $this->getContainer()->get('kernel');
 		$this->_apiUser = $this->_em->getRepository('AsianUserBundle:ApiUser')->getFirstElement();
-		$memcache = new Cache();
+		$memcache = $this->getContainer()->get('asian_request.cache');
 
 		try {
 			if (!$helper->isLoggedInCommand($this->_apiUser)) {

@@ -37,7 +37,7 @@ class BettingController extends Controller
 				throw new Exception();
 			}
 
-			$memcache = new Cache();
+			$memcache = $this->container->get('asian_request.cache');
 			$feeds = $memcache->getParam('feeds_live');
 			if (!$feeds) {
 				return $this->json(['Code' => '-1']);
@@ -63,7 +63,7 @@ class BettingController extends Controller
 				throw new Exception();
 			}
 
-			$memcache = new Cache();
+			$memcache = $this->container->get('asian_request.cache');
 
 			$leagues = $memcache->getParam('leagues_live');
 

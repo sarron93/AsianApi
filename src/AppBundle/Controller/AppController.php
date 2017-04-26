@@ -20,8 +20,15 @@ class AppController extends Controller
 	 * @Route("/")
 	 * @Method("GET")
 	 */
-	public function indexAction(Request $request = null)
+	public function indexAction()
 	{
-		return $this->render('AppBundle:Default:index.html.twig');
+		$customerSession =  $this->container->get('asian_user.session');
+
+		if (is_null($customerSession->getCustomerId())) {
+			return $this->redirectToRoute('fos_user_security_login');
+		}
+
+
+		return $this->redirectToRoute('app_dashboard_index');
 	}
 }
