@@ -7,3 +7,12 @@ services:
         arguments: ['@doctrine.orm.entity_manager']
         tags:
             - { name: kernel.event_subscriber }
+    asian_user.login:
+        class: Asian\UserBundle\EventListener\LoginListener
+        arguments: ['@session' ,'@doctrine.orm.entity_manager']
+        tags:
+            - { name: kernel.event_subscriber }
+    asian_user.session:
+        class: Asian\UserBundle\Model\CustomerSession
+        factory: ['Asian\UserBundle\Model\CustomerSession', getInstance]
+        arguments: ['@session', '@doctrine.orm.entity_manager']

@@ -20,7 +20,7 @@ class AppController extends Controller
 	 * @Route("/")
 	 * @Method("GET")
 	 */
-	public function indexAction(Request $request = null)
+	public function indexAction()
 	{
 		$customerSession =  $this->container->get('asian_user.session');
 

@@ -10,6 +10,7 @@ namespace Asian\RequestApiBundle\Controller;
 
 use Asian\RequestApiBundle\Event\ApiLoginEvent;
 use Asian\RequestApiBundle\Event\ApiLoginSubscriber;
+use Asian\RequestApiBundle\Model\ApiWeb;
 use Asian\UserBundle\Helper\Data;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,7 +20,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Unirest;
 
 class LoginController extends Controller
 {
@@ -100,16 +100,13 @@ class LoginController extends Controller
 					  'password' => $user->getApiUser()->getPassword()
 			];
 
-			$response = Unirest\Request::get($apiLoginUrl, $headers, $query);
-			if ($response->code != 200) {
-				throw new HttpException($response->code, 'Response Error');
-			}
+			$response = ApiWeb::sendGetRequest($apiLoginUrl, $headers, $query);
 
-			if ($response->body->Code == 0) {
+			if ($response->Code == 0) {
 				$apiUser = $user->getApiUser();
 
-				$apiUser->setAOKey($response->body->Result->Key);
-				$apiUser->setAOToken($response->body->Result->Token);
+				$apiUser->setAOKey($response->Result->Key);
+				$apiUser->setAOToken($response->Result->Token);
 
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($apiUser);
@@ -124,7 +121,7 @@ class LoginController extends Controller
 			$event = new ApiLoginEvent($apiUser, $response, $request);
 			$dispatcher->dispatch(ApiLoginEvent::API_LOGIN_SUCCESS, $event);
 
-			return $this->json($response->body);
+			return $this->json($response);
 
 		} catch (Exception $e) {
 			throw new HttpException(400, "Invalid request");

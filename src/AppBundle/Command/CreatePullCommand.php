@@ -2,14 +2,13 @@
 
 namespace AppBundle\Command;
 
-use Asian\RequestApiBundle\Model\Cache;
+use Asian\RequestApiBundle\Model\ApiConsole;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use AppBundle\Command\Helper\Data;
 use Asian\UserBundle\Helper\Data as HelperUser;
-use Unirest;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -34,7 +33,7 @@ class CreatePullCommand extends ContainerAwareCommand
 		$this->_em = $this->getContainer()->get('doctrine.orm.entity_manager');
 		$this->_kernel = $this->getContainer()->get('kernel');
 		$this->_apiUser = $this->_em->getRepository('AsianUserBundle:ApiUser')->getFirstElement();
-		$memcache = new Cache();
+		$memcache = $this->getContainer()->get('asian_request.cache');
 
 		try {
 			if (!$helper->isLoggedInCommand($this->_apiUser)) {
@@ -87,17 +86,14 @@ class CreatePullCommand extends ContainerAwareCommand
 			'password' => $this->_apiUser->getPassword()
 		];
 
-		$response = Unirest\Request::get($apiLoginUrl, $headers, $query);
-		if ($response->code != 200) {
-			throw new Exception($response->code . ' Response Error');
+		$response = ApiConsole::sendGetRequest($apiLoginUrl, $headers, $query);
+
+		if ($response->Code < 0) {
+			throw new Exception(json_decode($response));
 		}
 
-		if ($response->body->Code < 0) {
-			throw new Exception(json_decode($response->body));
-		}
-
-		$this->_apiUser->setAOKey($response->body->Result->Key);
-		$this->_apiUser->setAOToken($response->body->Result->Token);
+		$this->_apiUser->setAOKey($response->Result->Key);
+		$this->_apiUser->setAOToken($response->Result->Token);
 
 		$this->_em->persist($this->_apiUser);
 		$this->_em->flush();
@@ -123,14 +119,10 @@ class CreatePullCommand extends ContainerAwareCommand
 			'username' => $this->_apiUser->getUsername(),
 		];
 
-		$response = Unirest\Request::get($helper->getApiRegisterUrl(), $sendHeaders, $query);
+		$response = ApiConsole::sendGetRequest($helper->getApiRegisterUrl(), $sendHeaders, $query);
 
-		if ($response->code != 200) {
-			throw new Exception($response->code . ' Response Error');
-		}
-
-		if ($response->body->Code < 0) {
-			throw new Exception(json_decode($response->body));
+		if ($response->Code < 0) {
+			throw new Exception(json_decode($response));
 		}
 	}
 
@@ -153,16 +145,13 @@ class CreatePullCommand extends ContainerAwareCommand
 			'marketTypeId' => $marketTypeId,
 		];
 
-		$response = Unirest\Request::get($helper->getApiLeaguesUrl(), $headers, $query);
-		if ($response->code !== 200) {
-			throw new Exception($response->code . ' Response Error');
-		}
+		$response = ApiConsole::sendGetRequest($helper->getApiLeaguesUrl(), $headers, $query);
 
-		if ($response->body->Code < 0) {
+		if ($response->Code < 0) {
 			throw new Exception('get leagues method error');
 		}
 
-		return $response->body;
+		return $response;
 	}
 
 	/**
@@ -187,15 +176,12 @@ class CreatePullCommand extends ContainerAwareCommand
 			'marketTypeId' => $marketTypeId,
 		];
 
-		$response = Unirest\Request::get($helper->getApiFeedsUrl(), $headers, $query);
+		$response = ApiConsole::sendGetRequest($helper->getApiFeedsUrl(), $headers, $query);
 
-		if ($response->code != 200) {
-			throw new Exception($response->code . ' Response Error');
-		}
-		if ($response->body->Code < 0) {
+		if ($response->Code < 0) {
 			throw new Exception('Get feeds method error');
 		}
 
-		return $response->body;
+		return $response;
 	}
 }
