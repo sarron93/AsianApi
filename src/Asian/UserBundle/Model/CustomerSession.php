@@ -16,6 +16,7 @@ class CustomerSession
 {
 	protected $_session;
 	protected $_em;
+	protected $_userToken;
 	private static $_instance = null;
 
 	public static function getInstance(Session $session, EntityManager $em)
@@ -28,6 +29,7 @@ class CustomerSession
 
 	private function __construct(Session $session, EntityManager $em)
 	{
+		$this->_userToken = $session->get('user_token');
 		$this->_session = unserialize($session->get('_security_main'));
 		$this->_em = $em;
 	}
@@ -66,6 +68,30 @@ class CustomerSession
 	public function checkSession()
 	{
 		return (boolean) $this->_session;
+	}
+
+	/**
+	 * check active token
+	 *
+	 * @return bool
+	 */
+	public function checkActiveToken()
+	{
+		if (!$this->checkSession()) {
+			return false;
+		}
+
+		return $this->getCustomer()->checkUser($this->_userToken);
+	}
+
+	/**
+	 * get user token
+	 *
+	 * @return mixed
+	 */
+	public function getUserToken()
+	{
+		return $this->_userToken;
 	}
 
 }

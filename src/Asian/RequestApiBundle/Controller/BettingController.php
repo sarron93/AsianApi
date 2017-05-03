@@ -30,14 +30,13 @@ class BettingController extends Controller
 	public function getFeedsAction(Request $request)
 	{
 		try {
-			$user = $this->get('fos_user.user_manager')
-				->findUserByUsername($request->query->get('username'));
+			$adapter = $this->get('asian_request.adapter.factory');
 
-			if(!$user->checkUser($request->headers->get('token'))) {
-				throw new Exception();
+			if (!$adapter->checkUser()) {
+				throw new Exception('Invalid user data');
 			}
 
-			$memcache = $this->container->get('asian_request.cache');
+			$memcache = $this->get('asian_request.cache');
 			$feeds = $memcache->getParam('feeds_live');
 			if (!$feeds) {
 				return $this->json(['Code' => '-1']);
@@ -56,14 +55,13 @@ class BettingController extends Controller
 	public function getLeaguesAction(Request $request)
 	{
 		try{
-			$user = $this->get('fos_user.user_manager')
-				->findUserByUsername($request->query->get('username'));
+			$adapter = $this->get('asian_request.adapter.factory');
 
-			if(!$user->checkUser($request->headers->get('token'))) {
-				throw new Exception();
+			if (!$adapter->checkUser()) {
+				throw new Exception('Invalid user data');
 			}
 
-			$memcache = $this->container->get('asian_request.cache');
+			$memcache = $this->get('asian_request.cache');
 
 			$leagues = $memcache->getParam('leagues_live');
 
@@ -84,10 +82,13 @@ class BettingController extends Controller
 	public function getPlacementInfoAction(Request $request)
 	{
 		$helper = new Data();
-		$user = $this->get('fos_user.user_manager')->findUserByUsername($request->query->get('username'));
-		if (!$user->checkUser($request->headers->get('token'))) {
+		$adapter = $this->get('asian_request.adapter.factory');
+
+		if (!$adapter->checkUser()) {
 			throw new Exception('Invalid user data');
 		}
+
+		$user = $adapter->getUser();
 
 		$apiUser = $user->getApiUser();
 

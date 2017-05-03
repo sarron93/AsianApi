@@ -78,12 +78,15 @@ class LoginController extends Controller
 
 			$helper = new Data();
 
-			$user = $this->get('fos_user.user_manager')
-				->findUserByUsername($request->query->get('username'));
 
-			if (!$user->checkUser($request->headers->get('token'))) {
+			$adapter = $this->get('asian_request.adapter.factory');
+
+			if (!$adapter->checkUser()) {
 				throw  new Exception();
 			}
+
+			$user = $adapter->getUser();
+
 			if (!$user->isApiUser()) {
 				throw new Exception();
 			}

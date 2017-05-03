@@ -4,3 +4,13 @@ services:
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
     asian_request.cache:
         class: Asian\RequestApiBundle\Model\Cache
+    asian_request.adapter.web:
+        class: Asian\RequestApiBundle\Model\Adapter\WebAdapter
+        arguments: ['@asian_user.session']
+    asian_request.adapter.api:
+        class: Asian\RequestApiBundle\Model\Adapter\ApiAdapter
+        arguments: ['@fos_user.user_manager', '@request_stack']
+    asian_request.adapter.factory:
+        class: Asian\RequestApiBundle\Model\Adapter\Factory
+        factory: ['Asian\RequestApiBundle\Model\Adapter\Factory', getAdapter]
+        arguments: ['@asian_user.session', '@service_container']

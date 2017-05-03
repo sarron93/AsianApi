@@ -15,12 +15,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DashboardController extends Controller
 {
+
 	/**
 	 * @Route("/dashboard")
 	 * @Method("GET")
 	 */
 	public function indexAction(Request $request = null)
 	{
+		if(!$this->_isActive()) {
+			return $this->redirectToRoute('fos_user_security_login');
+		}
 		return $this->render('AppBundle:Default:index.html.twig');
+	}
+
+	/**
+	 * is active user
+	 *
+	 * @return boolean
+	 */
+	protected function _isActive()
+	{
+		return $this->get('asian_user.session')->checkActiveToken();
 	}
 }
