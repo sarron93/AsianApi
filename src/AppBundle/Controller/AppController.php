@@ -22,7 +22,13 @@ class AppController extends Controller
 	 */
 	public function indexAction(Request $request = null)
 	{
-		// return $this->render('AppBundle:Default:index.html.twig');
-		return $this->render('AsianRequestApiBundle:Default:login.html.twig');
+		$customerSession =  $this->container->get('asian_user.session');
+
+		if (is_null($customerSession->getCustomerId())) {
+			return $this->redirectToRoute('fos_user_security_login');
+		}
+
+
+		return $this->redirectToRoute('app_dashboard_index');
 	}
 }
