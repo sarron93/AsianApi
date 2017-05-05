@@ -1,127 +1,38 @@
-.navbar-shadow{
-    box-shadow: -3px 5px 27px #c8c6c6;
+body{
+    background-color: black;
+    color: #555;
 }
-.btn-register{
-    color: #575656;
-    background-color: #cdcdcd;
+.logo{
+    width: 240px;
+    display: block;
+    margin: 30px auto 0 auto;
 }
-.btn-login{
-    color: white;
-    background-color: #960000;
-}
-.btn-login:hover{
-    background-color: #449d44;
-}
-.slider-wrapper{
-    background: url(../img/bg-color.jpg) center center;
-    background-size: cover;
-    margin: 54px 0;
-}
-.slider-wrapper img{
-    width: 100%;
-}
-.slider-wrapper h1{
-    text-transform: uppercase;
-    color: white;
-    text-shadow: -2px 1px 7px black;
-    font-size: 31px;
-}
-.slider-wrapper p{
-    color: white;
-    text-shadow: -2px 1px 7px black;
-}
-.slider-btns{
-    float: right;
-}
-.learnMore, .learnMore:hover{
-    background-color: #960000;
-    border-color: #960000;
-    text-transform: uppercase;
-    border-radius: 27px;
-    padding: 10px 107px;
-    outline: 0;
-}
-.betNow, .betNow:hover{
-    color: #960000;
+.panel{
+    width: 400px;
     background-color: #fff;
-    border-color: #fff;
-    text-transform: uppercase;
-    border-radius: 27px;
-    padding: 10px 107px;
-    outline: 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    margin: 30px auto 20px auto;
+    padding: 40px;
 }
-.content-h1{
-    color: #363636;
-    text-align: center;
+label{
+    cursor: pointer;
+    text-transform: uppercase;
     font-weight: bold;
-    font-size: 31px;
-    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 1px;
 }
-.content-wrapper h2{
-    font-size: 30px;
-    text-align: center;
-    text-transform: uppercase;
-    color: #363636;
+.form-control:active, .form-control:focus{
+    border-color: #999;
+    box-shadow: none;
+}
+.login-btn{
+    cursor: pointer;
+    font-size: 14px;
     font-weight: bold;
-}
-.content-widget-one{
-    background: url(../img/widget-bg-1.jpg) center center;
-    background-size: cover;
-    padding: 92px 0;
-}
-.content-widget-one h2{
-    color: #fff;
-    text-align: left;
-}
-.content-widget-one p{
-    color: #fff;
-    text-align: left;
-}
-@media (min-width: 576px) {
-    .content-widget-one img{
-        width: 100%;
-    }
-}
-.content-widget-two{
-    background: url(../img/widget-bg-2.jpg) center center;
-    background-size: cover;
-    padding: 92px 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     margin-top: 10px;
 }
-.content-widget-two h2{
-    color: #fff;
-    text-align: right;
-}
-.content-widget-two p{
-    color: #fff;
-    text-align: right;
-}
-@media (min-width: 576px) {
-    .content-widget-two img{
-        width: 100%;
-    }
-}
-.content-widget-three{
-    background: url(../img/widget-bg-3.jpg) center center;
-    background-size: cover;
-    padding: 92px 0;
-    margin-top: 10px;
-}
-.content-widget-three h2{
-    color: #fff;
-    text-align: left;
-}
-.content-widget-three p{
-    color: #fff;
-    text-align: left;
-}
-
-.footerBottom{
-    background-color: #960000;
-    padding: 14px 0;
-    color: white;
-}
-.footerBottom p{
-    padding: 0;
-    margin: 0;
+.copyright{
+    margin: 10px auto 0 auto;
 }
