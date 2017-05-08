@@ -8,11 +8,19 @@
 
 namespace Asian\UserBundle\Helper;
 
+use Asian\UserBundle\Entity\ApiUser;
 use Asian\UserBundle\Entity\User;
 
 class Data
 {
-	const API_URL = "https://webapi.asianodds88.com/";
+	protected $url;
+
+	const API_URL = 'https://webapi.asianodds88.com/AsianOddsService';
+
+	public function __construct(ApiUser $apiUser)
+	{
+		$this->url = $apiUser->getUrl();
+	}
 	/**
 	 * generation Token
 	 *
@@ -21,7 +29,7 @@ class Data
 	 * @param $salt
 	 * @return string
 	 */
-	public function generateToken(User $user, $password,$salt)
+	public static function generateToken(User $user, $password,$salt)
 	{
 		return sha1($salt . $user->getUsername()
 					. $salt . $password);
@@ -29,35 +37,35 @@ class Data
 
 	public function getApiLoginUrl()
 	{
-		return self::API_URL."AsianOddsService/Login";
+		return self::API_URL."/Login";
 	}
 
 	public function getApiRegisterUrl()
 	{
-		return self::API_URL."AsianOddsService/Register";
+		return $this->url."/Register";
 	}
 
 	public function getApiLeaguesUrl()
 	{
-		return self::API_URL."AsianOddsService/GetLeagues";
+		return $this->url."/GetLeagues";
 	}
 
 	public function getApiFeedsUrl()
 	{
-		return self::API_URL."AsianOddsService/GetFeeds";
+		return $this->url."/GetFeeds";
 	}
 	public function getApiPlacementInfo()
 	{
-		return self::API_URL."/AsianOddsService/GetPlacementInfo";
+		return $this->url."/GetPlacementInfo";
 	}
 
 	public function getPlaceBet()
 	{
-		return self::API_URL."AsianOddsService/PlaceBet";
+		return $this->url."/PlaceBet";
 	}
 
 	public function getAccountSummary()
 	{
-		return self::API_URL."/AsianOddsService/GetAccountSummary";
+		return $this->url."/GetAccountSummary";
 	}
 }

@@ -45,6 +45,11 @@ class ApiUser
 	protected $AOToken;
 
 	/**
+	 * @ORM\Column(type="string", length=50, nullable=true)
+	 */
+	protected $url;
+
+	/**
 	 * @ORM\OneToMany(targetEntity="User", mappedBy="apiUser")
 	 */
 	private $users;
@@ -192,5 +197,27 @@ class ApiUser
     public function getUsers()
     {
         return $this->users;
+    }
+
+	/**
+	 * set url
+	 *
+	 * @param string $url
+	 * @return ApiUser
+	 */
+    public function setUrl($url)
+    {
+    	$this->url = $url;
+    	return $this;
+    }
+
+	/**
+	 * get api url
+	 *
+	 * @return string
+	 */
+    public function getUrl()
+    {
+    	return $this->url;
     }
 }

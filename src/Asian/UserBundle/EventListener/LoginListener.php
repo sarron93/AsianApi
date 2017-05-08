@@ -54,8 +54,7 @@ class LoginListener implements EventSubscriberInterface
 		$token = $event->getRequest()->get('_csrf_token');
 		$password = $event->getRequest()->request->get('_password');
 
-		$helper = new Data();
-		$token = $helper->generateToken($user, $password, $token);
+		$token = Data::generateToken($user, $password, $token);
 		$user->setToken($token);
 
 		$this->_session->set('user_token', $token);

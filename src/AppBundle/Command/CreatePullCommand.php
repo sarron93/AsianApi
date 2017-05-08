@@ -3,6 +3,7 @@
 namespace AppBundle\Command;
 
 use Asian\RequestApiBundle\Model\ApiConsole;
+use Asian\UserBundle\Entity\ApiUser;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputInterface;
@@ -79,7 +80,7 @@ class CreatePullCommand extends ContainerAwareCommand
 	 */
 	private function _loginApi()
 	{
-		$helper = new HelperUser();
+		$helper = new HelperUser($this->_apiUser);
 		$apiLoginUrl = $helper->getApiLoginUrl();
 		$headers = ['accept' => self::ACCEPT];
 		$query = ['username' => $this->_apiUser->getUsername(),
@@ -94,6 +95,7 @@ class CreatePullCommand extends ContainerAwareCommand
 
 		$this->_apiUser->setAOKey($response->Result->Key);
 		$this->_apiUser->setAOToken($response->Result->Token);
+		$this->_apiUser->setUrl($response->Result->Url);
 
 		$this->_em->persist($this->_apiUser);
 		$this->_em->flush();
@@ -108,7 +110,7 @@ class CreatePullCommand extends ContainerAwareCommand
 	 */
 	private function _registerApi()
 	{
-		$helper = new HelperUser();
+		$helper = new HelperUser($this->_apiUser);
 		$sendHeaders = [
 			'AOKey' => $this->_apiUser->getAOKey(),
 			'AOToken' => $this->_apiUser->getAOToken(),
@@ -133,7 +135,7 @@ class CreatePullCommand extends ContainerAwareCommand
 	 */
 	private function _getLeagues($marketTypeId)
 	{
-		$helper = new HelperUser();
+		$helper = new HelperUser($this->_apiUser);
 		$headers = [
 			'AOToken' => $this->_apiUser->getAOToken(),
 			'Accept' => self::ACCEPT
@@ -162,7 +164,7 @@ class CreatePullCommand extends ContainerAwareCommand
 	 */
 	private function _getFeeds($marketTypeId)
 	{
-		$helper = new HelperUser();
+		$helper = new HelperUser($this->_apiUser);
 		$headers = [
 			'AOToken' => $this->_apiUser->getAOToken(),
 			'Accept' => self::ACCEPT

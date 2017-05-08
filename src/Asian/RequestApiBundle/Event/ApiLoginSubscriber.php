@@ -31,8 +31,8 @@ class ApiLoginSubscriber implements EventSubscriberInterface
 
 	public function successApiLogin(ApiLoginEvent $event)
 	{
-		$helper = new Data();
 		$apiUser = $event->getApiUser();
+		$helper = new Data($apiUser);
 		$response = $event->getResponse();
 		$request = $event->getRequest();
 

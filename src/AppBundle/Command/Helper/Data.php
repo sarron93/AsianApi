@@ -18,7 +18,7 @@ class Data extends RequestHelper
 				'accept' => self::ACCEPT,
 			];
 
-			ApiConsole::sendGetRequest(parent::URL_LOGGED, $headers);
+			ApiConsole::sendGetRequest( $apiUser->getUrl() . parent::URL_LOGGED, $headers);
 			return true;
 		} catch (Exception $e) {
 			return false;

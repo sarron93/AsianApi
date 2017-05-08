@@ -27,7 +27,6 @@ class UserController extends Controller
 	 */
 	public function getAccountSummaryAction(Request $request)
 	{
-		$helper = new Data();
 		try {
 			$adapter = $this->get('asian_request.adapter.factory');
 
@@ -38,6 +37,7 @@ class UserController extends Controller
 			$user = $adapter->getUser();
 
 			$apiUser = $user->getApiUser();
+			$helper = new Data($apiUser);
 
 			$headers = [
 				'AOToken' => $apiUser->getAOToken(),

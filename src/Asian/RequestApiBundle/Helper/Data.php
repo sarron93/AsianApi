@@ -16,16 +16,15 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Data
 {
-	const URL_LOGGED = "https://webapi.asianodds88.com/AsianOddsService/IsLoggedIn";
+	const URL_LOGGED = "/IsLoggedIn";
 
 	public function isLoggedIn(ApiUser $apiUser, $accept)
 	{
-
 		$headers = ['AOToken' => $apiUser->getAOToken(),
 					'accept' => $accept,
 		];
 
-		$response = ApiWeb::sendGetRequest(self::URL_LOGGED, $headers);
+		$response = ApiWeb::sendGetRequest($apiUser->getUrl() . self::URL_LOGGED, $headers);
 
 		if ($response->Code == -1) {
 			return false;

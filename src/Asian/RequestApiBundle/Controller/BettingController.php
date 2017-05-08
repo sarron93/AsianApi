@@ -9,6 +9,7 @@
 namespace Asian\RequestApiBundle\Controller;
 
 use Asian\RequestApiBundle\Model\ApiWeb;
+use Asian\UserBundle\Entity\ApiUser;
 use Asian\UserBundle\Helper\Data;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\BrowserKit\Response;
@@ -81,7 +82,6 @@ class BettingController extends Controller
 	 */
 	public function getPlacementInfoAction(Request $request)
 	{
-		$helper = new Data();
 		$adapter = $this->get('asian_request.adapter.factory');
 
 		if (!$adapter->checkUser()) {
@@ -91,6 +91,8 @@ class BettingController extends Controller
 		$user = $adapter->getUser();
 
 		$apiUser = $user->getApiUser();
+
+		$helper = new Data($apiUser);
 
 		$headers = [
 			'AOToken' => $apiUser->getAOToken(),
@@ -163,14 +165,14 @@ class BettingController extends Controller
 			'Amount' => $amount,
 		];
 
-		$placeBetResponce = $this->_placeBetAction($postParams, $headers);
+		$placeBetResponce = $this->_placeBetAction($postParams, $headers, $apiUser);
 
 		return $this->json($placeBetResponce);
 	}
 
-	protected function _placeBetAction($postParams, $headers)
+	protected function _placeBetAction($postParams, $headers, ApiUser $apiUser)
 	{
-		$helper = new Data();
+		$helper = new Data($apiUser);
 		$url = $helper->getPlaceBet();
 		$body = Unirest\Request\Body::Json($postParams);
 

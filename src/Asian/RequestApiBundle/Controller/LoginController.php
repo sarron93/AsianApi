@@ -46,9 +46,7 @@ class LoginController extends Controller
 				throw new Exception();
             }
 
-            $helper = new Data();
-
-			$token = $helper->generateToken($user, $request->query->get('password'),
+			$token = Data::generateToken($user, $request->query->get('password'),
 				$request->headers->get('timestamp'));
 			$user->setToken($token);
 
@@ -76,9 +74,6 @@ class LoginController extends Controller
 		try {
 			$apiHelper = new \Asian\RequestApiBundle\Helper\Data();
 
-			$helper = new Data();
-
-
 			$adapter = $this->get('asian_request.adapter.factory');
 
 			if (!$adapter->checkUser()) {
@@ -91,12 +86,16 @@ class LoginController extends Controller
 				throw new Exception();
 			}
 
-			if ($apiHelper->isLoggedIn($user->getApiUser(), $request->headers->get('accept'))) {
+			if (!is_null($user->getApiUser()->getUrl())
+				&& $apiHelper->isLoggedIn($user->getApiUser(), $request->headers->get('accept'))) {
 				return $this->json(
 					['Code' => 0,
 					'Result' => ['Token' => $user->getApiUser()->getAOToken()]
 				]);
 			}
+
+			$helper = new Data($user->getApiUser());
+
 			$apiLoginUrl = $helper->getApiLoginUrl();
 			$headers = ['accept' => $request->headers->get('accept')];
 			$query = ['username' => $user->getApiUser()->getUsername(),
@@ -110,6 +109,7 @@ class LoginController extends Controller
 
 				$apiUser->setAOKey($response->Result->Key);
 				$apiUser->setAOToken($response->Result->Token);
+				$apiUser->setUrl($response->Result->Url);
 
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($apiUser);
