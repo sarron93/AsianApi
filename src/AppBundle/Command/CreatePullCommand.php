@@ -37,7 +37,7 @@ class CreatePullCommand extends ContainerAwareCommand
 		$memcache = $this->getContainer()->get('asian_request.cache');
 
 		try {
-			if (!$helper->isLoggedInCommand($this->_apiUser)) {
+			if (is_null($this->_apiUser->getUrl()) || !$helper->isLoggedInCommand($this->_apiUser)) {
 				$this->_loginApi();
 			}
 
