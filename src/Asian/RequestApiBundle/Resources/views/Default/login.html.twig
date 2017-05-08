@@ -1,0 +1,161 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+<!-- <nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <img src="{{ asset('img/logo.png') }}" alt="Asianodds logo">
+            </a>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
+              </ul>
+        </div>
+
+    </div>
+</nav> -->
+<nav class="navbar navbar-toggleable-md navbar-light bg-white navbar-shadow">
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('img/logo_2.png') }}" alt="Asianodds logo">
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbar">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Payments <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">FAQ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">API</a>
+            </li>
+          </ul>
+          <form class="form-inline col-lg-9">
+              <div class="form-group w-25 mr-2">
+                  <label class="sr-only" for="username">Username</label>
+                  <input type="text" class="form-control w-100" id="username" placeholder="Username">
+              </div>
+              <div class="form-group w-25 mr-2">
+                  <label class="sr-only" for="password">Username</label>
+                  <input type="password" class="form-control w-100" id="pasword" placeholder="Password">
+              </div>
+
+              <button type="submit" class="btn btn-login mr-2">LOGIN</button>
+              <button type="submit" class="btn btn-register">REGISTER</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="slider-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <img src="{{ asset('img/banner-img.png') }}" alt="NBA and Football Supertars">
+            </div>
+            <div class="col-lg-8 my-auto">
+                <h1>BET ON MULTIPLE SPORTSBOOKS WITH A SINGLE ACCOUNT</h1>
+                <p>Betting on multiple Sportsbooks just got easier with Asianodds88.  You can go straight to where you want to bet without switching accounts. In real-time.</p>
+                <p>Get free access to the most convenient <strong>sports trading platform </strong> and make your betting hassle-free!</p>
+                <div class="slider-btns clearfix">
+                    <a href="#asianoddssection" class="btn btn-danger btn-block learnMore" role="submit" aria-pressed="true">Learn More</a>
+                    <a href="http://asianodds88.com/register" class="btn btn-secondary btn-block betNow" role="submit" aria-pressed="true">Bet Now!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-wrapper" id="asianoddssection">
+    <div class="container">
+        <h1 class="content-h1">why bet on asianodds88?</h1>
+    </div>
+    <div class="content-widget-one">
+        <div class="container">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+                <div class="row">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <img src="{{ asset('img/icon-01.png') }}" alt="Clock icon">
+                    </div>
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <h2>real-time odds and bet aggregator</h2>
+                        <p>See real-time odds from top Asian bookmakers in just one place.  We aggregate real-time odds from top Asian bookmakers so you can place your bets with just one click! You can access our platform anywhere in the globe for FREE. No turnover requirements. No monthly fees.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-widget-two">
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+                    <div class="row">
+                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                            <h2>most convenient professional punter tool</h2>
+                            <p>Asianodds88 is created with punters in mind so you can maximize your returns in sports betting. We do this by giving you the best odds, the highest betting limits, and the lowest margins that are made available through our unique, single platform.</p>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                            <img src="{{ asset('img/icon-02.png') }}" alt="Hand icon">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-widget-three">
+        <div class="container">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+                <div class="row">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <img src="{{ asset('img/icon-01.png') }}" alt="Clock icon">
+                    </div>
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <h2>24/7 customer support</h2>
+                        <p>Enjoy a worry-free betting. Our dedicated customer support is readily available 24/7! Now you can focus more on what’s important: winning! We provide the fastest payout in the market today. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="footerBottom">
+        <div class="container">
+            <p>Copyright 2017 Asianconnect N. V.</p>
+        </div>
+    </div>
+</footer>
+{% endblock %}

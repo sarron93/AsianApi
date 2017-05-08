@@ -1,0 +1,38 @@
+body{
+    background-color: black;
+    color: #555;
+}
+.logo{
+    width: 240px;
+    display: block;
+    margin: 30px auto 0 auto;
+}
+.panel{
+    width: 400px;
+    background-color: #fff;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    margin: 30px auto 20px auto;
+    padding: 40px;
+}
+label{
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+.form-control:active, .form-control:focus{
+    border-color: #999;
+    box-shadow: none;
+}
+.login-btn{
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+.copyright{
+    margin: 10px auto 0 auto;
+}
