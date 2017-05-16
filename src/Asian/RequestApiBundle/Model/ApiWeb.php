@@ -9,6 +9,7 @@
 namespace Asian\RequestApiBundle\Model;
 
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Unirest\Exception;
 
 class ApiWeb extends Api
 {
@@ -16,6 +17,10 @@ class ApiWeb extends Api
 	{
 		if ($response->code < 200 || $response->code >= 400) {
 			throw new HttpException($response->code, 'Request error');
+		}
+
+		if ($response->body->Code < 0) {
+			throw new Exception(var_export($response, true));
 		}
 	}
 }

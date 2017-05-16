@@ -36,14 +36,14 @@ class LoginController extends Controller
 			$factory = $this->get('security.encoder_factory');
 
 			if (!$request->headers->get('timestamp')) {
-				throw new Exception();
+				throw new Exception('Invalid parameter timestamp');
 			}
             if (!$user->getId()) {
-				throw  new Exception();
+				throw  new Exception('User can\'t find');
             }
 
             if (!$user->isPasswordValid($request->query->get('password'), $factory)) {
-				throw new Exception();
+				throw new Exception('Login or password incorrect');
             }
 
 			$token = Data::generateToken($user, $request->query->get('password'),
@@ -55,12 +55,12 @@ class LoginController extends Controller
 			$em->flush();
 
 			if ($request->headers->get('token') != $token) {
-				throw new Exception();
+				throw new Exception('Invalid User data');
 			}
 			return $this->json(array('id' => $user->getId(), 'token' => $token));
 
 		} catch (Exception $e) {
-			throw  new HttpException(400, "Invalid user data");
+			return $this->json(['Code' => '-1', 'Message' => $e->getMessage()]);
 		}
 	}
 
@@ -72,31 +72,27 @@ class LoginController extends Controller
 	{
 
 		try {
-			$apiHelper = new \Asian\RequestApiBundle\Helper\Data();
-
 			$adapter = $this->get('asian_request.adapter.factory');
 
 			if (!$adapter->checkUser()) {
-				throw  new Exception();
+				throw  new Exception('Invalid User data');
 			}
 
 			$user = $adapter->getUser();
 
 			if (!$user->isApiUser()) {
-				throw new Exception();
+				throw new Exception('Invalid User data');
 			}
 
 			if (!is_null($user->getApiUser()->getUrl())
-				&& $apiHelper->isLoggedIn($user->getApiUser(), $request->headers->get('accept'))) {
+				&& $user->getApiUser()->isLoggedIn($request->headers->get('accept'))) {
 				return $this->json(
 					['Code' => 0,
 					'Result' => ['Token' => $user->getApiUser()->getAOToken()]
 				]);
 			}
 
-			$helper = new Data($user->getApiUser());
-
-			$apiLoginUrl = $helper->getApiLoginUrl();
+			$apiLoginUrl = Data::getApiLoginUrl();
 			$headers = ['accept' => $request->headers->get('accept')];
 			$query = ['username' => $user->getApiUser()->getUsername(),
 					  'password' => $user->getApiUser()->getPassword()
@@ -107,12 +103,8 @@ class LoginController extends Controller
 			if ($response->Code == 0) {
 				$apiUser = $user->getApiUser();
 
-				$apiUser->setAOKey($response->Result->Key);
-				$apiUser->setAOToken($response->Result->Token);
-				$apiUser->setUrl($response->Result->Url);
-
 				$em = $this->getDoctrine()->getManager();
-				$em->persist($apiUser);
+				$em->persist($apiUser->setUserData($response));
 				$em->flush();
 			}
 
@@ -127,7 +119,7 @@ class LoginController extends Controller
 			return $this->json($response);
 
 		} catch (Exception $e) {
-			throw new HttpException(400, "Invalid request");
+			return $this->json(['Code' => '-1', 'Message' => $e->getMessage()]);
 		}
 	}
 }

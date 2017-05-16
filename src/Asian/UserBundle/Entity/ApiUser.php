@@ -8,8 +8,11 @@
 
 namespace Asian\UserBundle\Entity;
 
+use Asian\UserBundle\Helper\Data;
 use Doctrine\Common\Collections\ArrayCollection;
+use Asian\RequestApiBundle\Model\ApiWeb;
 use Doctrine\ORM\Mapping as ORM;
+use Unirest\Exception;
 
 /**
  * @ORM\Entity(repositoryClass="Asian\UserBundle\Repository\ApiUserRepository")
@@ -219,5 +222,47 @@ class ApiUser
     public function getUrl()
     {
     	return $this->url;
+    }
+
+	/**
+	 * set data api user
+	 *
+	 * @param \Unirest\Response $response response object
+	 * @return ApiUser
+	 */
+    public function setUserData(\Unirest\Response $response)
+    {
+	    $this->setAOKey($response->Result->Key);
+	    $this->setAOToken($response->Result->Token);
+	    $this->setUrl($response->Result->Url);
+
+	    return $this;
+    }
+
+	/**
+	 * is logged in user
+	 *
+	 * @param string $accept accept
+	 * @return boolean
+	 */
+    public function isLoggedIn($accept = 'application/json')
+    {
+    	try {
+
+		    $headers = ['AOToken' => $this->getAOToken(),
+			    'accept' => $accept,
+		    ];
+
+		    $response = ApiWeb::sendGetRequest(Data::isLosggedIn($this), $headers);
+
+		    if ($response->Code == -1) {
+			    return false;
+		    }
+
+	    } catch (Exception $e) {
+    		return false;
+	    }
+
+	    return true;
     }
 }

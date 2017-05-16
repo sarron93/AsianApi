@@ -8,8 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use AppBundle\Command\Helper\Data;
-use Asian\UserBundle\Helper\Data as HelperUser;
+use Asian\UserBundle\Helper\Data;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -30,14 +29,13 @@ class CreatePullCommand extends ContainerAwareCommand
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$helper = new Data();
 		$this->_em = $this->getContainer()->get('doctrine.orm.entity_manager');
 		$this->_kernel = $this->getContainer()->get('kernel');
 		$this->_apiUser = $this->_em->getRepository('AsianUserBundle:ApiUser')->getFirstElement();
 		$memcache = $this->getContainer()->get('asian_request.cache');
 
 		try {
-			if (is_null($this->_apiUser->getUrl()) || !$helper->isLoggedInCommand($this->_apiUser)) {
+			if (is_null($this->_apiUser->getUrl()) || !$this->_apiUser->isLoggedIn()) {
 				$this->_loginApi();
 			}
 
@@ -80,8 +78,7 @@ class CreatePullCommand extends ContainerAwareCommand
 	 */
 	private function _loginApi()
 	{
-		$helper = new HelperUser($this->_apiUser);
-		$apiLoginUrl = $helper->getApiLoginUrl();
+		$apiLoginUrl = Data::getApiLoginUrl();
 		$headers = ['accept' => self::ACCEPT];
 		$query = ['username' => $this->_apiUser->getUsername(),
 			'password' => $this->_apiUser->getPassword()
@@ -93,11 +90,7 @@ class CreatePullCommand extends ContainerAwareCommand
 			throw new Exception(json_decode($response));
 		}
 
-		$this->_apiUser->setAOKey($response->Result->Key);
-		$this->_apiUser->setAOToken($response->Result->Token);
-		$this->_apiUser->setUrl($response->Result->Url);
-
-		$this->_em->persist($this->_apiUser);
+		$this->_em->persist($this->_apiUser->setUserData($response));
 		$this->_em->flush();
 
 		$this->_registerApi();
@@ -110,7 +103,6 @@ class CreatePullCommand extends ContainerAwareCommand
 	 */
 	private function _registerApi()
 	{
-		$helper = new HelperUser($this->_apiUser);
 		$sendHeaders = [
 			'AOKey' => $this->_apiUser->getAOKey(),
 			'AOToken' => $this->_apiUser->getAOToken(),
@@ -121,7 +113,7 @@ class CreatePullCommand extends ContainerAwareCommand
 			'username' => $this->_apiUser->getUsername(),
 		];
 
-		$response = ApiConsole::sendGetRequest($helper->getApiRegisterUrl(), $sendHeaders, $query);
+		$response = ApiConsole::sendGetRequest(Data::getApiRegisterUrl($this->_apiUser), $sendHeaders, $query);
 
 		if ($response->Code < 0) {
 			throw new Exception(json_decode($response));
@@ -135,7 +127,6 @@ class CreatePullCommand extends ContainerAwareCommand
 	 */
 	private function _getLeagues($marketTypeId)
 	{
-		$helper = new HelperUser($this->_apiUser);
 		$headers = [
 			'AOToken' => $this->_apiUser->getAOToken(),
 			'Accept' => self::ACCEPT
@@ -147,7 +138,7 @@ class CreatePullCommand extends ContainerAwareCommand
 			'marketTypeId' => $marketTypeId,
 		];
 
-		$response = ApiConsole::sendGetRequest($helper->getApiLeaguesUrl(), $headers, $query);
+		$response = ApiConsole::sendGetRequest(Data::getApiLeaguesUrl($this->_apiUser), $headers, $query);
 
 		if ($response->Code < 0) {
 			throw new Exception('get leagues method error');
@@ -164,7 +155,6 @@ class CreatePullCommand extends ContainerAwareCommand
 	 */
 	private function _getFeeds($marketTypeId)
 	{
-		$helper = new HelperUser($this->_apiUser);
 		$headers = [
 			'AOToken' => $this->_apiUser->getAOToken(),
 			'Accept' => self::ACCEPT
@@ -178,7 +168,7 @@ class CreatePullCommand extends ContainerAwareCommand
 			'marketTypeId' => $marketTypeId,
 		];
 
-		$response = ApiConsole::sendGetRequest($helper->getApiFeedsUrl(), $headers, $query);
+		$response = ApiConsole::sendGetRequest(Data::getApiFeedsUrl($this->_apiUser), $headers, $query);
 
 		if ($response->Code < 0) {
 			throw new Exception('Get feeds method error');

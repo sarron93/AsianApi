@@ -37,14 +37,13 @@ class UserController extends Controller
 			$user = $adapter->getUser();
 
 			$apiUser = $user->getApiUser();
-			$helper = new Data($apiUser);
 
 			$headers = [
 				'AOToken' => $apiUser->getAOToken(),
 				'Accept' => $request->headers->get('accept'),
 			];
 
-			$response = ApiWeb::sendGetRequest($helper->getAccountSummary(), $headers);
+			$response = ApiWeb::sendGetRequest(Data::getAccountSummary($apiUser), $headers);
 
 			return $this->json($response);
 		} catch (Exception $e) {

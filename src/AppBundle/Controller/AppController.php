@@ -22,7 +22,7 @@ class AppController extends Controller
 	 */
 	public function indexAction()
 	{
-		$customerSession =  $this->container->get('asian_user.session');
+		$customerSession = $this->container->get('asian_user.session');
 
 		if (is_null($customerSession->getCustomerId())) {
 			return $this->redirectToRoute('fos_user_security_login');

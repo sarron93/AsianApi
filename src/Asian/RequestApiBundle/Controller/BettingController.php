@@ -45,7 +45,7 @@ class BettingController extends Controller
 			return $this->json($feeds);
 
 		} catch (Exception $e) {
-			throw new HttpException(400, 'Invalid Data');
+			return $this->json(['Code' => '-1', 'Message' => $e->getMessage()]);
 		}
 	}
 
@@ -72,7 +72,7 @@ class BettingController extends Controller
 
 			return $this->json($leagues);
 		} catch (Exception $e) {
-			throw new HttpException('400', 'Invalid Data');
+			return $this->json(['Code' => '-1', 'Message' => $e->getMessage()]);
 		}
 	}
 
@@ -91,8 +91,6 @@ class BettingController extends Controller
 		$user = $adapter->getUser();
 
 		$apiUser = $user->getApiUser();
-
-		$helper = new Data($apiUser);
 
 		$headers = [
 			'AOToken' => $apiUser->getAOToken(),
@@ -117,7 +115,7 @@ class BettingController extends Controller
 			'oddsName' => $oddsName,
 			'oddsFormat' => $oddsFormat,
 		];
-		$url = $helper->getApiPlacementInfo() . '?';
+		$url = Data::getApiPlacementInfo($apiUser) . '?';
 		$params = http_build_query($getParams);
 
 		$url .= $params;
@@ -170,10 +168,17 @@ class BettingController extends Controller
 		return $this->json($placeBetResponce);
 	}
 
+	/**
+	 * place bet action
+	 *
+	 * @param $postParams
+	 * @param $headers
+	 * @param ApiUser $apiUser
+	 * @return mixed
+	 */
 	protected function _placeBetAction($postParams, $headers, ApiUser $apiUser)
 	{
-		$helper = new Data($apiUser);
-		$url = $helper->getPlaceBet();
+		$url = Data::getPlaceBet($apiUser);
 		$body = Unirest\Request\Body::Json($postParams);
 
 		$response = ApiWeb::sendPostRequest($url, $headers, $body);

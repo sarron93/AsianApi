@@ -22,6 +22,11 @@ use Unirest;
 class ApiLoginSubscriber implements EventSubscriberInterface
 {
 
+	/**
+	 * get subscribe events
+	 *
+	 * @return array
+	 */
 	public static function getSubscribedEvents()
 	{
 		return [
@@ -29,10 +34,15 @@ class ApiLoginSubscriber implements EventSubscriberInterface
 		];
 	}
 
+	/**
+	 * success api login action event
+	 *
+	 * @param \Asian\RequestApiBundle\Event\ApiLoginEvent $event
+	 * @return void
+	 */
 	public function successApiLogin(ApiLoginEvent $event)
 	{
 		$apiUser = $event->getApiUser();
-		$helper = new Data($apiUser);
 		$response = $event->getResponse();
 		$request = $event->getRequest();
 
@@ -46,7 +56,7 @@ class ApiLoginSubscriber implements EventSubscriberInterface
 			'username' => $apiUser->getUsername(),
 		];
 
-		$response = ApiWeb::sendGetRequest($helper->getApiRegisterUrl(), $sendHeaders, $query);
+		$response = ApiWeb::sendGetRequest(Data::getApiRegisterUrl($apiUser), $sendHeaders, $query);
 		if ($response->Code < 0) {
 			throw new Exception($response->Result->TextMessage);
 		}

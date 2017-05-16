@@ -13,14 +13,7 @@ use Asian\UserBundle\Entity\User;
 
 class Data
 {
-	protected $url;
-
 	const API_URL = 'https://webapi.asianodds88.com/AsianOddsService';
-
-	public function __construct(ApiUser $apiUser)
-	{
-		$this->url = $apiUser->getUrl();
-	}
 	/**
 	 * generation Token
 	 *
@@ -35,37 +28,90 @@ class Data
 					. $salt . $password);
 	}
 
-	public function getApiLoginUrl()
+	/**
+	 * get api login url
+	 *
+	 * @return string
+	 */
+	public static function getApiLoginUrl()
 	{
-		return self::API_URL."/Login";
+		return self::API_URL . "/Login";
 	}
 
-	public function getApiRegisterUrl()
+	/**
+	 * get api register url
+	 *
+	 * @param ApiUser $apiUser
+	 * @return string
+	 */
+	public static function getApiRegisterUrl(ApiUser $apiUser)
 	{
-		return $this->url."/Register";
+		return $apiUser->getUrl() . "/Register";
 	}
 
-	public function getApiLeaguesUrl()
+	/**
+	 * get leagues url
+	 *
+	 * @param ApiUser $apiUser
+	 * @return string
+	 */
+	public static function getApiLeaguesUrl(ApiUser $apiUser)
 	{
-		return $this->url."/GetLeagues";
+		return $apiUser->getUrl() . "/GetLeagues";
 	}
 
-	public function getApiFeedsUrl()
+	/**
+	 * get feeds url
+	 *
+	 * @param ApiUser $apiUser
+	 * @return string
+	 */
+	public static function getApiFeedsUrl(ApiUser $apiUser)
 	{
-		return $this->url."/GetFeeds";
-	}
-	public function getApiPlacementInfo()
-	{
-		return $this->url."/GetPlacementInfo";
-	}
-
-	public function getPlaceBet()
-	{
-		return $this->url."/PlaceBet";
+		return $apiUser->getUrl() . "/GetFeeds";
 	}
 
-	public function getAccountSummary()
+	/**
+	 * get placement info url
+	 *
+	 * @param ApiUser $apiUser
+	 * @return string
+	 */
+	public static function getApiPlacementInfo(ApiUser $apiUser)
 	{
-		return $this->url."/GetAccountSummary";
+		return $apiUser->getUrl() . "/GetPlacementInfo";
+	}
+
+	/**
+	 * place bet url
+	 *
+	 * @param ApiUser $apiUser
+	 * @return string
+	 */
+	public static function getPlaceBet(ApiUser $apiUser)
+	{
+		return $apiUser->getUrl() . "/PlaceBet";
+	}
+
+	/**
+	 * account summary url
+	 *
+	 * @param ApiUser $apiUser
+	 * @return string
+	 */
+	public static function getAccountSummary(ApiUser $apiUser)
+	{
+		return $apiUser->getUrl() . "/GetAccountSummary";
+	}
+
+	/**
+	 * is logged in url
+	 *
+	 * @param ApiUser $apiUser
+	 * @return string
+	 */
+	public static function isLosggedIn(ApiUser $apiUser)
+	{
+		return $apiUser->getUrl() . "/IsLoggedIn";
 	}
 }
