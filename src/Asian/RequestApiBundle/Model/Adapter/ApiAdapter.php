@@ -11,6 +11,7 @@ namespace Asian\RequestApiBundle\Model\Adapter;
 
 use FOS\UserBundle\Doctrine\UserManager;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class ApiAdapter implements Adapter
 {
@@ -46,6 +47,9 @@ class ApiAdapter implements Adapter
 	 */
 	public function checkUser()
 	{
+		if (is_null($this->_requestStack->getCurrentRequest()->headers->get('token'))) {
+			throw new Exception('Invalid user data');
+		}
 		return $this->_user->checkUser($this->_requestStack->getCurrentRequest()->headers->get('token'));
 	}
 }
