@@ -40,6 +40,10 @@ class User extends BaseUser
 	protected $lastActivityApi;
 
 	/**
+	 * @ORM\Column(type="integer", nullable=true, options={"default" : 300})
+	 */
+	protected $credit;
+	/**
 	 * @ORM\ManyToOne(targetEntity="ApiUser", inversedBy="users")
 	 * @ORM\JoinColumn(name="api_id", referencedColumnName="id")
 	 */
@@ -187,5 +191,27 @@ class User extends BaseUser
     public function getApiUser()
     {
         return $this->apiUser;
+    }
+
+	/**
+	 * Set Credit
+	 *
+	 * @param integer $credit credit
+	 * @return User
+	 */
+    public function setCredit($credit)
+    {
+    	$this->credit = (int) $credit;
+    	return $this;
+    }
+
+	/**
+	 * get credit
+	 *
+	 * @return mixed
+	 */
+    public function getCredit()
+    {
+    	return $this->credit;
     }
 }
