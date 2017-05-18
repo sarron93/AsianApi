@@ -227,10 +227,10 @@ class ApiUser
 	/**
 	 * set data api user
 	 *
-	 * @param \Unirest\Response $response response object
+	 * @param \stdClass $response response object
 	 * @return ApiUser
 	 */
-    public function setUserData(\Unirest\Response $response)
+    public function setUserData(\stdClass $response)
     {
 	    $this->setAOKey($response->Result->Key);
 	    $this->setAOToken($response->Result->Token);
